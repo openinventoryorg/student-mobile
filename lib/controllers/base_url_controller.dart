@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:smartlab_mobile_frontend/api/api.dart';
+
+import 'package:openinventory_student_app/api/api.dart';
 
 /// Class to keep track of the base url of the app.
 /// Base url is the server url that the app is connected to. (Server URL)

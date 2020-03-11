@@ -2,12 +2,14 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/time.dart';
-import 'package:smartlab_mobile_frontend/controllers/api_controller.dart';
-import 'package:smartlab_mobile_frontend/views/browse_page/bowse_page.dart';
-import 'package:smartlab_mobile_frontend/views/search_page/search_page.dart';
-import 'package:smartlab_mobile_frontend/views/settings_page/settings_page.dart';
-import 'package:smartlab_mobile_frontend/views/widgets/flashy_tab_bar.dart';
-import 'package:smartlab_mobile_frontend/views/widgets/smart_app_bar.dart';
+
+import 'package:openinventory_student_app/controllers/api_controller.dart';
+
+import './browse_page/bowse_page.dart';
+import './search_page/search_page.dart';
+import './settings_page/settings_page.dart';
+import './widgets/flashy_tab_bar.dart';
+import './widgets/smart_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   @override

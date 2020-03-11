@@ -50,11 +50,11 @@ class TokenController extends ChangeNotifier {
   /// decode in to JSON and notifies listeners
   Future<void> _loadToken() async {
     String jwt = await _storage.read(key: key);
-    tokenLoadedCompleter.complete(_token?.user?.email);
     if (jwt != null) {
       var parsed = json.decode(jwt);
       _token = Token.fromJson(parsed);
     }
+    tokenLoadedCompleter.complete(_token?.user?.email);
     notifyListeners();
   }
 

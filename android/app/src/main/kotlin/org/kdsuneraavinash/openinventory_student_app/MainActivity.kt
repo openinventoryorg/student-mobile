@@ -1,4 +1,4 @@
-package org.kdsuneraavinash.smartlab_mobile_frontend
+package org.kdsuneraavinash.openinventory_student_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

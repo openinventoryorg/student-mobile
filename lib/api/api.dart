@@ -37,7 +37,6 @@ class ApiClient {
       var response = await _dio.post(endPoint, data: request.toJson());
       return Token.fromJson(response.data);
     } catch (err) {
-      print(err);
       throw throwError(err);
     }
   }

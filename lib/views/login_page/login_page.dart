@@ -3,10 +3,12 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:quiver/time.dart';
-import 'package:smartlab_mobile_frontend/controllers/api_controller.dart';
-import 'package:smartlab_mobile_frontend/controllers/base_url_controller.dart';
-import 'package:smartlab_mobile_frontend/routes/router.dart';
-import 'package:smartlab_mobile_frontend/views/widgets/smart_app_bar.dart';
+
+import 'package:openinventory_student_app/controllers/api_controller.dart';
+import 'package:openinventory_student_app/controllers/base_url_controller.dart';
+import 'package:openinventory_student_app/routes/router.dart';
+
+import '../widgets/smart_app_bar.dart';
 
 class LoginPage extends StatefulWidget {
   @override
