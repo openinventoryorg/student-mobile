@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:quiver/time.dart';
 
 import './controllers/token_controller.dart';
 import './routes/router.dart';
@@ -54,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     // Wait a second to aviod flikrs
-    await Future.delayed(aSecond);
+    // await Future.delayed(aSecond);
 
     String targetRoute;
     if (currentUserEmail == null) {

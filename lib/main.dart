@@ -8,7 +8,9 @@ import './controllers/token_controller.dart';
 import './routes/router.dart';
 import './routes/routes.dart';
 
+/// Dart entry point
 void main() {
+  // Register routes
   defineAllRoutes();
   runApp(BaseApp());
 }
