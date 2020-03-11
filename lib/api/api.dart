@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../controllers/token_controller.dart';
 import './requests/login_request.dart';
 import './responses/error_message.dart';
 import './responses/token.dart';
@@ -13,7 +14,13 @@ class ApiClient {
   final Dio _dio;
 
   /// Initializer for client.
-  ApiClient(this._dio, this._baseUrl);
+  ApiClient(this._baseUrl) : _dio = Dio() {
+    _dio.options.headers["Content-Type"] = "application/json";
+  }
+
+  void setToken(TokenController tokenController) {
+    tokenController.setHeaders(_dio);
+  }
 
   /// Handler for the errors, returns the handled error
   Exception throwError(dynamic err) {

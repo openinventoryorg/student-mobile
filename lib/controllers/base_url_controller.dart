@@ -1,55 +1,55 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:openinventory_student_app/api/api.dart';
-
-/// Class to keep track of the base url of the app.
-/// Base url is the server url that the app is connected to. (Server URL)
+/// Class to keep track of the base url of the organization.
+///
+/// Base url is the server url that the app is connected to.
+/// The api endpoint will be taken as `baseurl/api`.
+/// All the requests will be sent taking this url as the reference url.
 class BaseUrlController extends ChangeNotifier {
-  /// Key used when storing in the storage
-  static const key = 'url';
-
-  /// Storage to be used to store `token`.
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  /// Key used when storing the url in the storage
+  static const storeKey = 'url';
 
   /// Base URL of the server.
+  ///
+  /// This controls the state of the [BaseUrlController].
+  /// All the child widgets should be notified if this changes.
   String _baseUrl;
 
-  /// Initializes and loads base url from storage.
+  /// Initializes and loads base url from storage asynchronously.
   BaseUrlController() {
     _loadBaseUrl();
   }
 
-  /// Helper class to get `BaseUrlController` instance
+  /// Helper method to make consuming this object easy
   static BaseUrlController of(BuildContext context, [bool listen = false]) {
     return Provider.of<BaseUrlController>(context, listen: listen);
   }
 
-  /// Loads base url from the storage
+  /// Loads base url from the storage.
+  ///
+  /// [SharedPreferences] is used since [_baseUrl] is not sensitive.
+  /// All the listners will be notified when this is completed.
   Future<void> _loadBaseUrl() async {
-    String url = await _storage.read(key: key);
-    _baseUrl = url ?? '';
+    SharedPreferences _storage = await SharedPreferences.getInstance();
+    _baseUrl = _storage.getString(storeKey) ?? '';
     notifyListeners();
   }
 
-  /// Sets base url to the storage
+  /// Changes base url to the given url.
+  ///
+  /// This also saves the url in the storage.
+  /// All the listners will be notified when this is completed.
   Future<void> setBaseUrl(String url) async {
     _baseUrl = url ?? '';
-    await _storage.write(key: key, value: _baseUrl);
+    SharedPreferences _storage = await SharedPreferences.getInstance();
+    _storage.setString(storeKey, _baseUrl);
     notifyListeners();
   }
 
-  /// Getter for base url
+  /// Current organization server url; eg: https://organization.com
   String get baseUrl => _baseUrl ?? '';
-
-  /// Sets the `ApiClient` when the dio object is provided.
-  /// This assumes the base url is in http://mysite.com format
-  /// and adds /api to the url.
-  ApiClient createApiClient(Dio dio) {
-    return ApiClient(dio, '$_baseUrl/api');
-  }
 }

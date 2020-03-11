@@ -43,6 +43,8 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
+  /// Authenticates the user.
+  ///
   /// Gets the user email and if the user is logged in redirects to home.
   /// Otherwise redirects to login page
   void _authenticate() async {
@@ -66,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  /// Gets current email from Token Controller.
+  /// Gets current email from Controller.
   Future<String> _getCurrentEmail() {
     return TokenController.of(context).tokenLoadedCompleter.future;
   }

@@ -10,10 +10,20 @@ import './routes/routes.dart';
 
 void main() {
   defineAllRoutes();
-  runApp(MyApp());
+  runApp(BaseApp());
 }
 
-class MyApp extends StatelessWidget {
+/// This is the main app entry point.
+///
+/// The app provider structure is
+/// [BaseUrlController]
+///     - [TokenController]
+///         - [ApiController]
+///               - [OpenInventoryApp]
+///
+/// [OpenInventoryApp] is provided as a proxy provider of
+/// other two providers. (which are changed notifier providers)
+class BaseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BaseUrlController>(
@@ -30,18 +40,18 @@ class MyApp extends StatelessWidget {
             tokenController: t,
           ),
           lazy: false,
-          child: ApiManagedApp(),
+          child: OpenInventoryApp(),
         ),
       ),
     );
   }
 }
 
-class ApiManagedApp extends StatelessWidget {
+class OpenInventoryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SmartLab',
+      title: 'Open Inventory',
       theme: ThemeData(
         primaryColor: Colors.white,
         accentColor: Color(0xff272e81),

@@ -3,27 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppRouter {
-  /// Generator factory
+  /// Facotory required to create the singleton.
   factory AppRouter() {
     return _instance ??= AppRouter._internal();
   }
 
-  /// Private contructor
+  /// Private contructor required to make creation
+  /// of this object restrivted to others.
   AppRouter._internal() {
     _router = Router();
   }
 
-  /// Static object reference
+  /// Static object reference the initialized router.
   static AppRouter _instance;
 
-  /// Fluro router reference
+  /// Fluro router reference which handles routing.
   Router _router = Router();
 
-  /// Getters
+  /// Route generation method.
+  ///
+  /// It is used with the [MaterialApp.onGenerateRoute] property as callback
+  /// to create routes that can be used with the [Navigator] class.
   static RouteFactory get generator => AppRouter()._router.generator;
+
+  /// Fluro router reference which handles routing.
   static Router get _fluroRouter => AppRouter()._router;
 
-  /// Define a route to a page
+  /// Defines a route to a page.
+  ///
+  /// Example:
+  /// ```dart
+  /// router.defineRoute(path: "/", handler: (context, params) => HomePage());
+  /// ```
+  /// Params can be used to get paramters passed to the route.
   void defineRoute({
     @required String path,
     @required HandlerFunc handler,
@@ -37,7 +49,7 @@ class AppRouter {
     );
   }
 
-  /// Define a route to a function(eg: `showDialog`)
+  /// Defines a route to a function(eg: `showDialog`).
   void defineFunction({
     @required String path,
     @required HandlerFunc handler,
@@ -51,7 +63,7 @@ class AppRouter {
     );
   }
 
-  /// Navigate to the route
+  /// Navigates to the route.
   static Future<dynamic> navigate(BuildContext context, String path,
       {bool replace = false,
       bool clearStack = false,
@@ -65,7 +77,7 @@ class AppRouter {
     );
   }
 
-  /// Navigate to route. But first empty the stack.
+  /// Navigates to route after emptieing the stack.
   static Future<dynamic> freshNavigate(BuildContext context, String path) {
     return _fluroRouter.navigateTo(
       context,

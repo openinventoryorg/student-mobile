@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,40 +5,52 @@ import './base_url_controller.dart';
 import '../api/api.dart';
 import './token_controller.dart';
 
-/// Main Controller which controls access to the API.
-/// Uses `ApiClient` internally and acts as the midddleman.
-/// This also takes care of some errors.
+/// Controller which encapsulates [ApiClient]
+///
+/// This uses [ApiClient] internally and acts as the midddleman.
+/// This also takes care of some errors which occur when calling the API.
+@immutable
 class ApiController {
-  /// Role that is permitted in the App
+  /// User role that should be permitted to the app.
+  ///
+  /// If a user who does not belong to the specified role,
+  /// an error message will be shown.
+  /// This string effectively locks tha app to a specific role.
   static const permittedRole = 'Student';
 
-  /// Token controller associated with this api controller
+  /// This is the object which encapsulates the token required
+  /// in order to make an authenticated API call.
+  ///
+  /// When the [_tokenController] notifies its children,
+  /// a new [ApiController] will be created.
+  /// The reference is kept in order to change the [Token]
+  /// when the user logs in to the system.
   final TokenController _tokenController;
 
-  /// Dio client used to send requests
-  final Dio _dio;
+  /// The object which handles network calls.
+  final ApiClient _client;
 
-  /// API client which manages internal requests
-  ApiClient _client;
-
-  /// Initialized `ApiController`.
-  /// Uses `TokenController` and `BaseUrlController` to set token headers and base url.
+  /// Initializes the object by acting as a proxy for
+  /// [TokenController] and [BaseUrlController].
   ///
-  /// Also important headers are also set here.
+  /// [TokenController] is required to authenticate the user.
+  /// [BaseUrlController] is required to create the [ApiClient]
+  /// using the current server url/organization url.
+  ///
+  /// Use [ApiController.fromContext()] to initialize using the context.
   ApiController({
     @required TokenController tokenController,
     @required BaseUrlController baseUrlController,
-  })  : _dio = Dio(),
-        _tokenController = tokenController {
-    // Set token and header.
-    _tokenController.setHeaders(_dio);
-    _dio.options.headers["Content-Type"] = "application/json";
-
-    // Create client
-    _client = baseUrlController.createApiClient(_dio);
+  })  : _tokenController = tokenController,
+        _client = ApiClient(baseUrlController.baseUrl) {
+    _client.setToken(tokenController);
   }
 
-  /// Creates `ApiController` using context - helper method
+  /// Helper method to make the [ApiController] creation easy.
+  ///
+  /// This uses `.of()` methods to provide the reference.
+  /// *Note: There must be [TokenController] and [BaseUrlController]
+  /// objects above the provider of this object.*
   factory ApiController.fromContext({@required BuildContext context}) {
     return ApiController(
       tokenController: TokenController.of(context),
@@ -47,32 +58,31 @@ class ApiController {
     );
   }
 
-  /// Get reference to `ApiController` - helper method
+  /// Helper method to make consuming this object easy
   static ApiController of(BuildContext context) {
     return Provider.of<ApiController>(context, listen: false);
   }
 
-  /// # LOGIN REQUEST
+  /// Logs the user in using the given credentials.
   ///
-  /// Sends a login request and stored the recieved token.
+  /// Sends a login request and stores the recieved token.
   /// This also enforces the **permitted roles only** requirement for the app.
   Future<void> logIn(String email, String password) async {
     var token = await _client.login(email, password);
     if (token == null) {
       throw Exception('Invalid data recieved. Please check your connection.');
-    } else {
-      if (token?.user?.role != permittedRole) {
-        throw Exception(
-            'Only students can use this app. You do not have student credentials.');
-      }
+    } else if (token?.user?.role != permittedRole) {
+      throw Exception(
+          'Only students can use this app. You do not have student credentials.');
     }
 
     _tokenController.setToken(token);
   }
 
-  /// # DEMO REQUEST
+  /// Sends a demonstration request
   ///
-  /// Demo request to make sure that user is logged in
+  /// This is just a demo method to make sure the user is authenticated.
+  /// Unauthenticated users will get an error.
   Future<void> demoCall() {
     return _client.demo();
   }
