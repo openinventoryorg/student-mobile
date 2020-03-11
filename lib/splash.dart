@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quiver/time.dart';
 
 import './controllers/token_controller.dart';
 import './routes/router.dart';
@@ -11,7 +12,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String userEmail;
+  String _userEmail;
 
   @override
   void initState() {
@@ -19,12 +20,39 @@ class _SplashScreenState extends State<SplashScreen> {
     _authenticate();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          SpinKitDualRing(
+            color: Theme.of(context).accentColor,
+            size: MediaQuery.of(context).size.height * 0.1,
+          ),
+          if (_userEmail != null)
+            Positioned(
+              child: Text(
+                _userEmail,
+                style: TextStyle(color: Theme.of(context).accentColor),
+              ),
+              bottom: 16,
+            ),
+        ],
+      ),
+    );
+  }
+
+  /// Gets the user email and if the user is logged in redirects to home.
+  /// Otherwise redirects to login page
   void _authenticate() async {
     String currentUserEmail = await _getCurrentEmail();
     setState(() {
-      userEmail = currentUserEmail;
+      _userEmail = currentUserEmail;
     });
-    await Future.delayed(Duration(seconds: 1));
+
+    // Wait a second to aviod flikrs
+    await Future.delayed(aSecond);
 
     String targetRoute;
     if (currentUserEmail == null) {
@@ -38,30 +66,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  /// Gets current email from Token Controller.
   Future<String> _getCurrentEmail() {
-    return TokenController.of(context).emailNotificationCompleter.future;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          SpinKitDualRing(
-            color: Theme.of(context).accentColor,
-            size: MediaQuery.of(context).size.height * 0.1,
-          ),
-          if (userEmail != null)
-            Positioned(
-              child: Text(
-                userEmail,
-                style: TextStyle(color: Theme.of(context).accentColor),
-              ),
-              bottom: 16,
-            ),
-        ],
-      ),
-    );
+    return TokenController.of(context).tokenLoadedCompleter.future;
   }
 }

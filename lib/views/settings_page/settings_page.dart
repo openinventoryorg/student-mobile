@@ -8,6 +8,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = TokenController.of(context).user;
 
+    if (user == null) {
+      // Fallback to logout instead of showing an error
+      logout(context);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -23,19 +28,17 @@ class SettingsPage extends StatelessWidget {
                   size: 120,
                 ),
               ),
-              _buildListTile(EvaIcons.person, user.name, "Name", context),
-              _buildListTile(
-                  EvaIcons.activity, user.role, "Account Type", context),
-              _buildListTile(EvaIcons.at, user.email, "Email", context),
+              listTile(EvaIcons.person, user.name, "Name", context),
+              listTile(EvaIcons.activity, user.role, "Account Type", context),
+              listTile(EvaIcons.at, user.email, "Email", context),
             ],
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: OutlineButton.icon(
-            onPressed: () async {
-              await TokenController.of(context).logout();
-              AppRouter.freshNavigate(context, '/');
+            onPressed: () {
+              logout(context);
             },
             icon: Icon(Icons.exit_to_app),
             label: Text('Logout'),
@@ -45,7 +48,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(
+  Widget listTile(
     IconData icon,
     String title,
     String subtitle,
@@ -62,5 +65,11 @@ class SettingsPage extends StatelessWidget {
       ),
       subtitle: Text(subtitle),
     );
+  }
+
+  /// Logs the user out
+  Future<void> logout(BuildContext context) async {
+    await TokenController.of(context).logout();
+    AppRouter.freshNavigate(context, '/');
   }
 }

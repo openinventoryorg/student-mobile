@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quiver/time.dart';
 import 'package:smartlab_mobile_frontend/controllers/api_controller.dart';
 import 'package:smartlab_mobile_frontend/views/browse_page/bowse_page.dart';
 import 'package:smartlab_mobile_frontend/views/search_page/search_page.dart';
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         onItemSelected: (index) => setState(() {
           _selectedIndex = index;
           _pageController.animateToPage(index,
-              duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
+              duration: aMillisecond * 100, curve: Curves.easeInOut);
         }),
         items: [
           FlashyTabBarItem(

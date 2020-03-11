@@ -4,6 +4,7 @@ import '../views/login_page/login_page.dart';
 
 import 'router.dart';
 
+/// List of routes in the app
 void defineAllRoutes() {
   AppRouter router = AppRouter();
   router.defineRoute(path: "/", handler: (_, __) => SplashScreen());

@@ -1,7 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:quiver/time.dart';
 import 'package:smartlab_mobile_frontend/controllers/api_controller.dart';
+import 'package:smartlab_mobile_frontend/controllers/base_url_controller.dart';
 import 'package:smartlab_mobile_frontend/routes/router.dart';
 import 'package:smartlab_mobile_frontend/views/widgets/smart_app_bar.dart';
 
@@ -11,11 +14,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  static const signInLogo =
-      'https://cdn.pixabay.com/photo/2015/12/10/16/39/shield-1086703_960_720.png';
+  static const signInLogo = 'assets/images/login_image.webp';
   static const emailRegex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$';
   bool _hidePassword;
   bool _asyncCallOngoing;
+  TextEditingController _baseUrlController;
   TextEditingController _emailController;
   TextEditingController _passwordController;
 
@@ -23,9 +26,13 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     _hidePassword = true;
     _asyncCallOngoing = false;
+    _baseUrlController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _baseUrlController.text = BaseUrlController.of(context).baseUrl;
+    });
   }
 
   @override
@@ -35,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: SmartAppBar(
-        title: 'SmartLab',
+        title: 'Open Inventory',
         subtitle: 'Student Sign-in',
       ),
       body: Padding(
@@ -46,10 +53,22 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32),
-                child: Image.network(
+                child: Image.asset(
                   signInLogo,
                   height: 175,
                   fit: BoxFit.contain,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: TextField(
+                  keyboardType: TextInputType.url,
+                  controller: _baseUrlController,
+                  decoration: InputDecoration(
+                    hintText: 'https://myorganization.com',
+                    labelText: 'Organization Url',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               Padding(
@@ -76,8 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                     border: OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: _hidePassword
-                          ? Icon(EvaIcons.eye)
-                          : Icon(EvaIcons.eyeOff),
+                          ? Icon(EvaIcons.eyeOff)
+                          : Icon(EvaIcons.eye),
                       onPressed: switchPasswordVisibility,
                     ),
                   ),
@@ -124,17 +143,22 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  /// Toggles the password visibility on/off
   void switchPasswordVisibility() {
     setState(() {
       _hidePassword = !_hidePassword;
     });
   }
 
+  /// Log the user in using the text box values.
+  /// If failed, shows a flush bar.
   void onSignInPressed() async {
+    String baseUrl = _baseUrlController.text.trim();
     String email = _emailController.text.trim();
     String password = _passwordController.text;
-
-    if (email.isEmpty) {
+    if (baseUrl.isEmpty) {
+      showFlushbar('Validation Error', 'Organization Url must be provided');
+    } else if (email.isEmpty) {
       showFlushbar('Validation Error', 'Email must be provided');
     } else if (!RegExp(emailRegex).hasMatch(email)) {
       showFlushbar('Validation Error', 'Email is of invalid format');
@@ -143,6 +167,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       updateAsyncCallStatus(true);
       try {
+        await BaseUrlController.of(context).setBaseUrl(baseUrl);
         await ApiController.of(context).logIn(email, password);
         AppRouter.freshNavigate(context, '/home');
       } catch (err) {
@@ -153,6 +178,9 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  /// Updates the state of async calls.
+  /// (To make sure not to send 2 async calls at once
+  /// and to show an indicator)
   void updateAsyncCallStatus(bool ongoing) {
     if (mounted) {
       setState(() {
@@ -161,13 +189,15 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  /// Shows a error message flush bar
   void showFlushbar(String title, String subtitle) {
     Flushbar(
       title: title,
       message: subtitle,
-      animationDuration: Duration(milliseconds: 200),
+      animationDuration: aMillisecond * 200,
       icon: Icon(Icons.error, color: Colors.white),
       backgroundColor: Colors.red,
+      duration: aSecond * 2,
       leftBarIndicatorColor: Colors.red[800],
       mainButton: FlatButton(
         child: Text('CLOSE'),

@@ -1,16 +1,90 @@
-# smartlab_mobile_frontend
+# Open Inventory Mobile App
 
 A new Flutter project.
 
-## Getting Started
+## Documentation
 
-This project is a starting point for a Flutter application.
+When documenting follow given guidelines,
 
-A few resources to get you started if this is your first Flutter project:
+### use `///` instead of `//` to document
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```dart
+// This is a regular comment
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+/// This is a documentation comment
+```
+
+### **Every** non UI class should be heavily documented
+
+```dart
+class LogicClass{
+    final String _var;
+
+    get var1 => _var;
+
+    void _method(){
+    }
+}
+```
+
+This class should be documented as,
+
+```dart
+/// What this class does
+class LogicClass{
+    /// What is this variable?
+    final String _var;
+
+    /// Why is there a getter?
+    get var1 => _var;
+
+    /// What does this method do?
+    /// Which objects uses this?
+    void method(){
+    }
+}
+```
+
+### UI Classes(classes inside `/views`) do not need to documented
+
+Classes inside view directory should be clutter free. So do not document then unless you do something implicitly or your intentions may not be clear. Howver all logic methods and callbacks should be lifted outside of the UI declaration and put in a method. Document this method as above.
+
+```dart
+class UIClass{
+    @override
+    Widget build(BuildContext context) {
+    }
+
+    Widget listTile(){
+    }
+
+    void onPress(){
+    }
+}
+```
+
+This should be documented as,
+
+```dart
+class UIClass{
+    @override
+    Widget build(BuildContext context) {
+    }
+
+    Widget listTile(){
+    }
+
+    /// What does this do?
+    void onPress(){
+    }
+}
+```
+
+**Also move all callback methods and logic methods to the end of file. Method organizations should be,
+
+1. constants
+2. fields
+3. contructor and factories
+4. build methods(if any)
+5. build helper methods
+6. logic methods

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smartlab_mobile_frontend/controllers/base_url_controller.dart';
 
 import './controllers/api_controller.dart';
 import './controllers/token_controller.dart';
@@ -13,24 +14,24 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static const baseUrl = 'http://10.0.2.2:3000/api';
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TokenController>(
+    return ChangeNotifierProvider<BaseUrlController>(
       lazy: false,
-      create: (_) => TokenController(),
-      child: ProxyProvider<TokenController, ApiController>(
-        create: (context) => ApiController.fromContext(
-          context: context,
-          baseUrl: baseUrl,
-        ),
-        update: (_, t, a) => ApiController(
-          baseUrl: a.baseUrl,
-          tokenController: t,
-        ),
+      create: (_) => BaseUrlController(),
+      child: ChangeNotifierProvider<TokenController>(
         lazy: false,
-        child: ApiManagedApp(),
+        create: (_) => TokenController(),
+        child:
+            ProxyProvider2<TokenController, BaseUrlController, ApiController>(
+          create: (context) => ApiController.fromContext(context: context),
+          update: (_, t, b, a) => ApiController(
+            baseUrlController: b,
+            tokenController: t,
+          ),
+          lazy: false,
+          child: ApiManagedApp(),
+        ),
       ),
     );
   }
