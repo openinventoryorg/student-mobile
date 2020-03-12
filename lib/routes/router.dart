@@ -1,3 +1,6 @@
+/// Router base class which handles page routing
+library router;
+
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

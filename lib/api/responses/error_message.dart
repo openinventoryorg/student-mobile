@@ -1,17 +1,20 @@
+/// Error response from Server
+library response_error_message;
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'error_message.g.dart';
 
 @JsonSerializable(nullable: false)
-class ErrorMessage {
+class ErrorMessageResponse {
   final String message;
 
-  ErrorMessage({this.message});
+  ErrorMessageResponse({this.message});
 
-  factory ErrorMessage.fromJson(Map<String, dynamic> json) =>
-      _$ErrorMessageFromJson(json);
+  factory ErrorMessageResponse.fromJson(Map<String, dynamic> json) =>
+      _$ErrorMessageResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ErrorMessageToJson(this);
+  Map<String, dynamic> toJson() => _$ErrorMessageResponseToJson(this);
 
   @override
   String toString() {

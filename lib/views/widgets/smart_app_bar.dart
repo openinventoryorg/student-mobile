@@ -1,3 +1,6 @@
+/// Appbar with two lines of text
+library widget_smart_app_bar;
+
 import 'package:flutter/material.dart';
 
 class SmartAppBar extends AppBar {
@@ -9,8 +12,8 @@ class SmartAppBar extends AppBar {
   }) : super(
           title: Column(
             children: <Widget>[
-              Text(title, style: AppBarStyles.appBarTitle),
-              Text(subtitle, style: AppBarStyles.appBarSubtitle),
+              Text(title, style: _AppBarStyles.appBarTitle),
+              Text(subtitle, style: _AppBarStyles.appBarSubtitle),
             ],
           ),
           centerTitle: true,
@@ -20,7 +23,7 @@ class SmartAppBar extends AppBar {
         );
 }
 
-abstract class AppBarStyles {
+abstract class _AppBarStyles {
   static TextStyle get appBarTitle => TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w800,

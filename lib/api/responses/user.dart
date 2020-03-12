@@ -1,9 +1,12 @@
+/// User information response from Server
+library response_user;
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
 
 @JsonSerializable(nullable: false)
-class User {
+class UserResponse {
   final String id;
   final String firstName;
   final String lastName;
@@ -12,7 +15,7 @@ class User {
   final String role;
   final String roleId;
 
-  User(
+  UserResponse(
       {this.firstName,
       this.lastName,
       this.email,
@@ -21,9 +24,10 @@ class User {
       this.roleId,
       this.id});
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory UserResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 
   String get name => '$firstName $lastName';
 

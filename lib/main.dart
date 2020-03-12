@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './controllers/base_url_controller.dart';
-import './controllers/api_controller.dart';
-import './controllers/token_controller.dart';
+import './controllers/base_url.dart';
+import './controllers/api.dart';
+import './controllers/token.dart';
 import './routes/router.dart';
 import './routes/routes.dart';
 

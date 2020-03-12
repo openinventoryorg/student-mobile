@@ -1,18 +1,22 @@
+/// Token information from server
+library response_token;
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:openinventory_student_app/api/responses/user.dart';
 
 part 'token.g.dart';
 
 @JsonSerializable(nullable: false)
-class Token {
+class TokenResponse {
   final String token;
-  final User user;
+  final UserResponse user;
 
-  Token({this.token, this.user});
+  TokenResponse({this.token, this.user});
 
-  factory Token.fromJson(Map<String, dynamic> json) => _$TokenFromJson(json);
+  factory TokenResponse.fromJson(Map<String, dynamic> json) =>
+      _$TokenResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TokenToJson(this);
+  Map<String, dynamic> toJson() => _$TokenResponseToJson(this);
 
   @override
   String toString() {

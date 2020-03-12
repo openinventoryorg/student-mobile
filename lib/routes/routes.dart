@@ -1,8 +1,10 @@
-import 'package:openinventory_student_app/views/browse_page/lab_page/lab_page.dart';
+/// Defines routes used in the app
+library router_routes;
 
-import '../splash.dart';
-import '../views/home_page.dart';
-import '../views/login_page/login_page.dart';
+import 'package:openinventory_student_app/views/pages/home.dart';
+import 'package:openinventory_student_app/views/pages/lab.dart';
+import 'package:openinventory_student_app/views/pages/login.dart';
+import 'package:openinventory_student_app/views/pages/splash.dart';
 
 import 'router.dart';
 

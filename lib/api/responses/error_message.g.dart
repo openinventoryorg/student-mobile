@@ -1,18 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'error_message.dart';
+part of response_error_message;
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ErrorMessage _$ErrorMessageFromJson(Map<String, dynamic> json) {
-  return ErrorMessage(
+ErrorMessageResponse _$ErrorMessageResponseFromJson(Map<String, dynamic> json) {
+  return ErrorMessageResponse(
     message: json['message'] as String,
   );
 }
 
-Map<String, dynamic> _$ErrorMessageToJson(ErrorMessage instance) =>
+Map<String, dynamic> _$ErrorMessageResponseToJson(
+        ErrorMessageResponse instance) =>
     <String, dynamic>{
       'message': instance.message,
     };
