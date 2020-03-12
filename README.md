@@ -1,90 +1,29 @@
-# Open Inventory Mobile App
+# Open Inventory Student Mobile App
 
-A new Flutter project.
+This is the mobile app which controls access of the user to the system.
 
-## Documentation
+## Installation
 
-When documenting follow given guidelines,
+First, install [flutter](https://flutter.dev).
+Then clone this repository and run using flutter tool.
 
-### use `///` instead of `//` to document
-
-```dart
-// This is a regular comment
-
-/// This is a documentation comment
+```bash
+git clone https://github.com/openinventorysystem/student-mobile
+cd student-mobile
+flutter run
 ```
 
-### **Every** non UI class should be heavily documented
+## Usage
 
-```dart
-class LogicClass{
-    final String _var;
+This has to used alongside the open inventory backend.
+Host the backend project using any method and then your lab users will be able to log in to the server using this app by providing base url.
 
-    get var1 => _var;
+## Contributing
 
-    void _method(){
-    }
-}
-```
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-This class should be documented as,
+Please make sure to update tests as appropriate.
 
-```dart
-/// What this class does
-class LogicClass{
-    /// What is this variable?
-    final String _var;
+## License
 
-    /// Why is there a getter?
-    get var1 => _var;
-
-    /// What does this method do?
-    /// Which objects uses this?
-    void method(){
-    }
-}
-```
-
-### UI Classes(classes inside `/views`) do not need to documented
-
-Classes inside view directory should be clutter free. So do not document then unless you do something implicitly or your intentions may not be clear. Howver all logic methods and callbacks should be lifted outside of the UI declaration and put in a method. Document this method as above.
-
-```dart
-class UIClass{
-    @override
-    Widget build(BuildContext context) {
-    }
-
-    Widget listTile(){
-    }
-
-    void onPress(){
-    }
-}
-```
-
-This should be documented as,
-
-```dart
-class UIClass{
-    @override
-    Widget build(BuildContext context) {
-    }
-
-    Widget listTile(){
-    }
-
-    /// What does this do?
-    void onPress(){
-    }
-}
-```
-
-**Also move all callback methods and logic methods to the end of file. Method organizations should be,
-
-1. constants
-2. fields
-3. contructor and factories
-4. build methods(if any)
-5. build helper methods
-6. logic methods
+[MIT](https://choosealicense.com/licenses/mit/)

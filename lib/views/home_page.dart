@@ -33,18 +33,6 @@ class _HomePageState extends State<HomePage> {
       appBar: SmartAppBar(
         title: 'SmartLab',
         subtitle: 'Smart Inventory System',
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.computer),
-            onPressed: () async {
-              try {
-                ApiController.of(context).demoCall();
-              } catch (err) {
-                print('ERROR: $err');
-              }
-            },
-          )
-        ],
       ),
       body: PageView(
         controller: _pageController,

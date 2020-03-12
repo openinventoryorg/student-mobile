@@ -12,7 +12,7 @@ import './routes/routes.dart';
 void main() {
   // Register routes
   defineAllRoutes();
-  runApp(BaseApp());
+  runApp(App());
 }
 
 /// This is the main app entry point.
@@ -25,7 +25,7 @@ void main() {
 ///
 /// [OpenInventoryApp] is provided as a proxy provider of
 /// other two providers. (which are changed notifier providers)
-class BaseApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BaseUrlController>(

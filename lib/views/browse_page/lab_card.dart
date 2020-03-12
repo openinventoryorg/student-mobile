@@ -1,17 +1,21 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:openinventory_student_app/routes/router.dart';
 
 class LabCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
+      padding: const EdgeInsets.all(2),
+      child: InkWell(
+        onTap: () => onLabCardPress(context),
         child: GridTile(
-          child: Image.network(
-            'https://blog.westmonroepartners.com/wp-content/uploads/2019/08/Lab_blog.jpg',
-            fit: BoxFit.cover,
+          child: Container(
+            color: Colors.black12,
+            child: Icon(
+              Icons.computer,
+              size: 48,
+            ),
           ),
           footer: Container(
             padding: EdgeInsets.all(8),
@@ -19,14 +23,16 @@ class LabCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 AutoSizeText(
-                  'Laboratory',
+                  'Embedded Systems Laboratory',
                   style: LabCardStyles.title,
-                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
                 ),
                 AutoSizeText(
-                  'Lorem ipsum sit amet del por var, si el',
+                  'Lab on floor 13',
                   style: LabCardStyles.subtitle,
-                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
               ],
             ),
@@ -34,6 +40,10 @@ class LabCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onLabCardPress(BuildContext context) {
+    AppRouter.navigate(context, '/home/lab/1');
   }
 }
 
