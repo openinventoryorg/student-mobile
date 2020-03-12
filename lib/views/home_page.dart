@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/time.dart';
 
-import 'package:openinventory_student_app/controllers/api_controller.dart';
-
 import './browse_page/bowse_page.dart';
 import './search_page/search_page.dart';
 import './settings_page/settings_page.dart';
