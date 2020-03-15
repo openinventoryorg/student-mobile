@@ -1,14 +1,14 @@
 /// Home page which contains bottom navigation bar
 library view_page_home;
 
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 
 import 'package:openinventory_student_app/views/sections/browse.dart';
 import 'package:openinventory_student_app/views/sections/search.dart';
 import 'package:openinventory_student_app/views/sections/settings.dart';
-import 'package:openinventory_student_app/views/widgets/flashy_tab_bar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,32 +43,19 @@ class _HomePageState extends State<HomePage> {
           SettingsSection(),
         ],
       ),
-      bottomNavigationBar: FlashyTabBar(
-        selectedIndex: _selectedIndex,
-        showElevation: true,
-        onItemSelected: (index) => setState(() {
+      bottomNavigationBar: FancyBottomNavigation(
+        tabs: [
+          TabData(iconData: LineIcons.home, title: "Home"),
+          TabData(iconData: LineIcons.search, title: "Search"),
+          TabData(iconData: LineIcons.book, title: "History"),
+          TabData(iconData: LineIcons.gear, title: "Settings")
+        ],
+        initialSelection: _selectedIndex,
+        onTabChangedListener: (index) => setState(() {
           _selectedIndex = index;
           _pageController.animateToPage(index,
               duration: Duration(milliseconds: 100), curve: Curves.easeInOut);
         }),
-        items: [
-          FlashyTabBarItem(
-            icon: Icon(EvaIcons.home),
-            title: Text('Browse'),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(EvaIcons.search),
-            title: Text('Search'),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(EvaIcons.book),
-            title: Text('History'),
-          ),
-          FlashyTabBarItem(
-            icon: Icon(EvaIcons.settings),
-            title: Text('Settings'),
-          ),
-        ],
       ),
     );
   }

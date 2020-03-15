@@ -1,8 +1,8 @@
 /// Home page section in which users can change settings and view profile.
 library view_section_settings;
 
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 
 import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/routes/router.dart';
@@ -27,14 +27,14 @@ class SettingsSection extends StatelessWidget {
                 color: Theme.of(context).accentColor,
                 padding: const EdgeInsets.all(16),
                 child: Icon(
-                  EvaIcons.person,
-                  color: Theme.of(context).primaryColor,
+                  Icons.person,
+                  color: Colors.white,
                   size: 120,
                 ),
               ),
-              listTile(EvaIcons.person, user.name, "Name", context),
-              listTile(EvaIcons.activity, user.role, "Account Type", context),
-              listTile(EvaIcons.at, user.email, "Email", context),
+              listTile(LineIcons.user, user.name, "Name", context),
+              listTile(LineIcons.list, user.role, "Account Type", context),
+              listTile(LineIcons.at, user.email, "Email", context),
             ],
           ),
         ),

@@ -98,24 +98,20 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: switchPasswordVisibility,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              RaisedButton(
-                color: AppColors.colorD,
-                textColor: Colors.white,
-                onPressed: _asyncCallOngoing ? () {} : onSignInPressed,
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text('Sign-in'),
-                    ),
-                    buttonIcon(),
-                  ],
+          RaisedButton(
+            color: AppColors.colorD,
+            textColor: Colors.white,
+            onPressed: _asyncCallOngoing ? () {} : onSignInPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text('Sign-in'),
                 ),
-              ),
-            ],
+                buttonIcon(),
+              ],
+            ),
           ),
         ],
       ),

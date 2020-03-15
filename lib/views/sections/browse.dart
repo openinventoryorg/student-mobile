@@ -3,12 +3,15 @@ library view_section_browse;
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:openinventory_student_app/routes/router.dart';
+import 'package:openinventory_student_app/views/colors.dart';
 
 class BrowseSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
+      physics: BouncingScrollPhysics(),
       crossAxisCount: 2,
       children: <Widget>[
         LabCard(),
@@ -30,10 +33,10 @@ class LabCard extends StatelessWidget {
         onTap: () => onLabCardPress(context),
         child: GridTile(
           child: Container(
-            color: Colors.black12,
+            color: AppColors.colorB,
             child: Icon(
-              Icons.computer,
-              size: 48,
+              LineIcons.laptop,
+              size: 56,
             ),
           ),
           footer: Container(

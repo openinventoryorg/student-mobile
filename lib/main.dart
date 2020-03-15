@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:openinventory_student_app/views/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -50,12 +51,14 @@ class App extends StatelessWidget {
   }
 }
 
+/// Material App Entry point
 class OpenInventoryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Open Inventory',
       theme: ThemeData(
+        fontFamily: GoogleFonts.lato().fontFamily,
         scaffoldBackgroundColor: Colors.white,
         accentColor: AppColors.colorC,
         primaryColor: AppColors.colorD,

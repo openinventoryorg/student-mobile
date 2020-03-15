@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 
+/// Colors used in the app
 abstract class AppColors {
   static const Color colorA = Color(0xffB9E3C6);
   static const Color colorB = Color(0xff59C9A5);
