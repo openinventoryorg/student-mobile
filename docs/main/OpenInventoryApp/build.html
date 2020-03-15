@@ -142,8 +142,10 @@ Widget build(BuildContext context) {
   return MaterialApp(
     title: &#39;Open Inventory&#39;,
     theme: ThemeData(
-      primaryColor: Colors.white,
-      accentColor: Color(0xff272e81),
+      fontFamily: GoogleFonts.lato().fontFamily,
+      scaffoldBackgroundColor: Colors.white,
+      accentColor: AppColors.colorC,
+      primaryColor: AppColors.colorD,
     ),
     onGenerateRoute: AppRouter.generator,
     initialRoute: &#39;&#47;&#39;,

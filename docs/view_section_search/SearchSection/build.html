@@ -66,6 +66,7 @@
     
         <li class="section-title"><a href="../../view_section_search/SearchSection-class.html#instance-methods">Methods</a></li>
         <li><a href="../../view_section_search/SearchSection/build.html">build</a></li>
+        <li><a href="../../view_section_search/SearchSection/signInLogo.html">signInLogo</a></li>
         <li class="inherited"><a href="../../view_section_search/SearchSection/createElement.html">createElement</a></li>
         <li class="inherited"><a href="../../view_section_search/SearchSection/debugDescribeChildren.html">debugDescribeChildren</a></li>
         <li class="inherited"><a href="../../view_section_search/SearchSection/debugFillProperties.html">debugFillProperties</a></li>
@@ -143,6 +144,7 @@ Widget build(BuildContext context) {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: &lt;Widget&gt;[
+        signInLogo(),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
@@ -152,12 +154,17 @@ Widget build(BuildContext context) {
             ),
           ),
         ),
-        RaisedButton.icon(
-          color: Theme.of(context).accentColor,
-          textColor: Colors.white,
-          onPressed: () {},
-          icon: Icon(EvaIcons.search),
-          label: Text(&#39;Search&#39;),
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              textColor: Colors.white,
+              onPressed: () {},
+              child: Text(&#39;Search&#39;),
+            ),
+          ),
         )
       ],
     ),

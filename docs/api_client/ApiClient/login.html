@@ -105,7 +105,7 @@
     var response = await _dio.post(endPoint, data: request.toJson());
     return TokenResponse.fromJson(response.data);
   } catch (err) {
-    if ((err is DioError &amp;&amp; err.response.statusCode == 404) ||
+    if ((err is DioError &amp;&amp; (err.response?.statusCode ?? 404) == 404) ||
         err is RangeError) {
       throw Exception(&#39;Invalid Server address. Server connection failed.&#39;);
     }

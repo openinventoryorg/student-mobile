@@ -142,9 +142,9 @@ and</li>
       <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: SmartAppBar(
-      title: &#39;SmartLab&#39;,
-      subtitle: &#39;Smart Inventory System&#39;,
+    appBar: AppBar(
+      title: Text(&#39;Open Inventory&#39;),
+      centerTitle: true,
     ),
     body: ListView(
       children: &lt;Widget&gt;[
