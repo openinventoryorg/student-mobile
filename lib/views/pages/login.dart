@@ -1,10 +1,10 @@
 /// Login page which handles user login
 library view_page_login;
 
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:line_icons/line_icons.dart';
 
 import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/controllers/base_url.dart';
@@ -50,65 +50,52 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  /// Login Screen Icon
   Widget signInLogo(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 2.5,
       child: Center(
         child: Icon(
-          EvaIcons.lockOutline,
-          size: 155,
+          Icons.lock_open,
+          size: 154,
           color: AppColors.colorC,
         ),
       ),
     );
   }
 
+  /// Form widget
   Widget form(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: TextField(
-              keyboardType: TextInputType.url,
-              controller: _baseUrlController,
-              decoration: InputDecoration(
-                hintText: 'https://myorganization.com',
-                labelText: 'Organization Url',
-                border: OutlineInputBorder(),
-              ),
-            ),
+          formTextBox(
+            hint: 'https://myorganization.com',
+            label: 'Organization Url',
+            controller: _baseUrlController,
+            prefix: LineIcons.server,
+            keyboard: TextInputType.emailAddress,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: TextField(
-              keyboardType: TextInputType.emailAddress,
-              controller: _emailController,
-              decoration: InputDecoration(
-                hintText: '150092U@uom.lk',
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
+          formTextBox(
+            hint: '150092U@uom.lk',
+            label: 'Email',
+            controller: _emailController,
+            prefix: LineIcons.at,
+            keyboard: TextInputType.url,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: TextField(
-              obscureText: _hidePassword,
-              controller: _passwordController,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                hintText: 'password',
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: _hidePassword
-                      ? Icon(EvaIcons.eyeOff)
-                      : Icon(EvaIcons.eye),
-                  onPressed: switchPasswordVisibility,
-                ),
-              ),
+          formTextBox(
+            hint: 'password',
+            label: 'Password',
+            controller: _passwordController,
+            obscureText: _hidePassword,
+            keyboard: TextInputType.text,
+            prefix: LineIcons.lock,
+            suffix: IconButton(
+              icon: _hidePassword
+                  ? Icon(LineIcons.eye_slash)
+                  : Icon(LineIcons.eye),
+              onPressed: switchPasswordVisibility,
             ),
           ),
           Row(
@@ -135,6 +122,33 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  /// Text box builder helper method.
+  Widget formTextBox(
+      {@required String hint,
+      @required String label,
+      @required TextEditingController controller,
+      @required TextInputType keyboard,
+      @required IconData prefix,
+      bool obscureText = false,
+      Widget suffix}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: TextField(
+        obscureText: obscureText,
+        controller: controller,
+        keyboardType: keyboard,
+        decoration: InputDecoration(
+          hintText: hint,
+          labelText: label,
+          border: OutlineInputBorder(),
+          suffixIcon: suffix,
+          prefixIcon: Icon(prefix),
+        ),
+      ),
+    );
+  }
+
+  /// Icon of the sign in button
   Widget buttonIcon() {
     if (_asyncCallOngoing) {
       return SizedBox(
@@ -146,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
         height: 24,
       );
     } else {
-      return Icon(EvaIcons.arrowForward);
+      return Icon(LineIcons.arrow_right);
     }
   }
 

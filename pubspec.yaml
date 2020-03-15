@@ -29,6 +29,7 @@ dependencies:
 
   # icon packs
   eva_icons_flutter: ^2.0.0
+  line_icons: ^0.2.0
 
   # helper widgets
   auto_size_text: ^2.1.0

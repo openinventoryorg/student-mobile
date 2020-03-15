@@ -5,7 +5,6 @@ library view_page_lab;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:openinventory_student_app/views/widgets/smart_app_bar.dart';
 
 class LabPage extends StatelessWidget {
   final String id;
@@ -15,9 +14,9 @@ class LabPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SmartAppBar(
-        title: 'SmartLab',
-        subtitle: 'Smart Inventory System',
+      appBar: AppBar(
+        title: Text('Open Inventory'),
+        centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[

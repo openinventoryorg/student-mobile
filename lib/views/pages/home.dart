@@ -9,7 +9,6 @@ import 'package:openinventory_student_app/views/sections/browse.dart';
 import 'package:openinventory_student_app/views/sections/search.dart';
 import 'package:openinventory_student_app/views/sections/settings.dart';
 import 'package:openinventory_student_app/views/widgets/flashy_tab_bar.dart';
-import 'package:openinventory_student_app/views/widgets/smart_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -30,9 +29,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SmartAppBar(
-        title: 'SmartLab',
-        subtitle: 'Smart Inventory System',
+      appBar: AppBar(
+        title: Text('Open Inventory'),
+        centerTitle: true,
       ),
       body: PageView(
         controller: _pageController,
