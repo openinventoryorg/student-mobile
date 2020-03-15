@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     // Wait a second to aviod flikrs
-    // await Future.delayed(aSecond);
+    await Future.delayed(Duration(seconds: 1));
 
     String targetRoute;
     if (currentUserEmail == null) {

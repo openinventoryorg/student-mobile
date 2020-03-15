@@ -47,7 +47,7 @@ class ApiClient {
       var response = await _dio.post(endPoint, data: request.toJson());
       return TokenResponse.fromJson(response.data);
     } catch (err) {
-      if ((err is DioError && err.response.statusCode == 404) ||
+      if ((err is DioError && (err.response?.statusCode ?? 404) == 404) ||
           err is RangeError) {
         throw Exception('Invalid Server address. Server connection failed.');
       }

@@ -5,13 +5,11 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:quiver/time.dart';
 
 import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/controllers/base_url.dart';
 import 'package:openinventory_student_app/routes/router.dart';
-
-import '../widgets/smart_app_bar.dart';
+import 'package:openinventory_student_app/views/colors.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -19,7 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  static const signInLogo = 'assets/images/login_image.webp';
   static const emailRegex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$';
   bool _hidePassword;
   bool _asyncCallOngoing;
@@ -42,93 +39,98 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    theme = theme.copyWith(primaryColor: theme.accentColor);
-
     return Scaffold(
-      appBar: SmartAppBar(
-        title: 'Open Inventory',
-        subtitle: 'Student Sign-in',
+      body: ListView(
+        physics: BouncingScrollPhysics(),
+        children: <Widget>[
+          signInLogo(context),
+          form(context),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Theme(
-          data: theme,
-          child: ListView(
+    );
+  }
+
+  Widget signInLogo(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 2.5,
+      child: Center(
+        child: Icon(
+          EvaIcons.lockOutline,
+          size: 155,
+          color: AppColors.colorC,
+        ),
+      ),
+    );
+  }
+
+  Widget form(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: TextField(
+              keyboardType: TextInputType.url,
+              controller: _baseUrlController,
+              decoration: InputDecoration(
+                hintText: 'https://myorganization.com',
+                labelText: 'Organization Url',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: TextField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+              decoration: InputDecoration(
+                hintText: '150092U@uom.lk',
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: TextField(
+              obscureText: _hidePassword,
+              controller: _passwordController,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                hintText: 'password',
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: _hidePassword
+                      ? Icon(EvaIcons.eyeOff)
+                      : Icon(EvaIcons.eye),
+                  onPressed: switchPasswordVisibility,
+                ),
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32),
-                child: Image.asset(
-                  signInLogo,
-                  height: 175,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: TextField(
-                  keyboardType: TextInputType.url,
-                  controller: _baseUrlController,
-                  decoration: InputDecoration(
-                    hintText: 'https://myorganization.com',
-                    labelText: 'Organization Url',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: TextField(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: '150092U@uom.lk',
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: TextField(
-                  obscureText: _hidePassword,
-                  controller: _passwordController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    hintText: 'password',
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      icon: _hidePassword
-                          ? Icon(EvaIcons.eyeOff)
-                          : Icon(EvaIcons.eye),
-                      onPressed: switchPasswordVisibility,
+              RaisedButton(
+                color: AppColors.colorD,
+                textColor: Colors.white,
+                onPressed: _asyncCallOngoing ? () {} : onSignInPressed,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text('Sign-in'),
                     ),
-                  ),
+                    buttonIcon(),
+                  ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    textColor: Colors.white,
-                    onPressed: _asyncCallOngoing ? () {} : onSignInPressed,
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Text('Sign-in'),
-                        ),
-                        buttonIcon(),
-                      ],
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
@@ -176,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
         await ApiController.of(context).logIn(email, password);
         AppRouter.freshNavigate(context, '/home');
       } catch (err) {
-        showFlushbar('Invalid Data', err.message);
+        showFlushbar('Invalid Data', err.toString());
       } finally {
         updateAsyncCallStatus(false);
       }
@@ -199,11 +201,11 @@ class _LoginPageState extends State<LoginPage> {
     Flushbar(
       title: title,
       message: subtitle,
-      animationDuration: aMillisecond * 200,
+      animationDuration: Duration(milliseconds: 200),
       icon: Icon(Icons.error, color: Colors.white),
-      backgroundColor: Colors.red,
-      duration: aSecond * 2,
-      leftBarIndicatorColor: Colors.red[800],
+      backgroundColor: AppColors.colorC,
+      duration: Duration(seconds: 1) * 2,
+      leftBarIndicatorColor: AppColors.colorE,
       mainButton: FlatButton(
         child: Text('CLOSE'),
         onPressed: () => Navigator.pop(context),

@@ -20,19 +20,26 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # state management
+  provider: ^4.0.4
+
+  # store data
   flutter_secure_storage: ^3.3.1+1
   shared_preferences: ^0.5.6+3
+
+  # icon packs
   eva_icons_flutter: ^2.0.0
+
+  # helper widgets
   auto_size_text: ^2.1.0
   flushbar: ^1.9.1
-  provider: ^4.0.4
+  flutter_spinkit: ^4.1.2
+
+  # utility widgets
   logger: ^0.8.3 
   dio: ^3.0.9
   fluro: ^1.5.1
-  flutter_spinkit: ^4.1.2
-  quiver: 2.0.5
 
- 
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +61,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/login_image.webp
+   - assets/images/app_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:openinventory_student_app/views/colors.dart';
 import 'package:provider/provider.dart';
 
 import './controllers/base_url.dart';
@@ -55,8 +56,9 @@ class OpenInventoryApp extends StatelessWidget {
     return MaterialApp(
       title: 'Open Inventory',
       theme: ThemeData(
-        primaryColor: Colors.white,
-        accentColor: Color(0xff272e81),
+        scaffoldBackgroundColor: Colors.white,
+        accentColor: AppColors.colorC,
+        primaryColor: AppColors.colorD,
       ),
       onGenerateRoute: AppRouter.generator,
       initialRoute: '/',

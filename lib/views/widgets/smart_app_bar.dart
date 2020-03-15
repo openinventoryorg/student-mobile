@@ -19,7 +19,6 @@ class SmartAppBar extends AppBar {
           centerTitle: true,
           actions: actions,
           bottom: bottom,
-          elevation: 1,
         );
 }
 
