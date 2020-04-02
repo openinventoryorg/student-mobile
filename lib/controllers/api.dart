@@ -20,7 +20,7 @@ class ApiController {
   /// If a user who does not belong to the specified role,
   /// an error message will be shown.
   /// This string effectively locks tha app to a specific role.
-  static const permittedRole = 'Student';
+  static const permittedRole = 'student';
 
   /// This is the object which encapsulates the token required
   /// in order to make an authenticated API call.
