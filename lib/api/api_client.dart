@@ -2,11 +2,16 @@
 library api_client;
 
 import 'package:dio/dio.dart';
+import 'package:openinventory_student_app/api/responses/item.dart';
+import 'package:openinventory_student_app/api/responses/labitem.dart';
 
 import '../controllers/token.dart';
 import './requests/login.dart';
 import './responses/error_message.dart';
 import './responses/token.dart';
+import './responses/labitemlist.dart';
+import './responses/lablist.dart';
+import './responses/lab.dart';
 
 /// Class that handles all API calls (requests and responses)
 class ApiClient {
@@ -55,12 +60,34 @@ class ApiClient {
     }
   }
 
-  /// # GET /demo
-  Future<void> demo() async {
+  /// # Get /labs/list
+  Future<List<LabResponse>> labsList() async {
     try {
-      String endPoint = '$_baseUrl/demo';
+      String endPoint = '$_baseUrl/labs/list';
       var response = await _dio.get(endPoint);
-      print(response);
+      return LabListResponse.fromJson(response.data).labs;
+    } catch (err) {
+      throw throwError(err);
+    }
+  }
+
+  /// # Get /labs/list
+  Future<List<LabItemResponse>> labItemsList(String labId) async {
+    try {
+      String endPoint = '$_baseUrl/labs/$labId/items';
+      var response = await _dio.get(endPoint);
+      return LabItemListResponse.fromJson(response.data).labItems;
+    } catch (err) {
+      throw throwError(err);
+    }
+  }
+
+  /// # Get /items/:ID
+  Future<ItemResponse> item(String itemId) async {
+    try {
+      String endPoint = '$_baseUrl/items/$itemId';
+      var response = await _dio.get(endPoint);
+      return ItemResponse.fromJson(response.data);
     } catch (err) {
       throw throwError(err);
     }

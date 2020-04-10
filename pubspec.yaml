@@ -36,6 +36,7 @@ dependencies:
   flushbar: ^1.9.1
   flutter_spinkit: ^4.1.2
   fancy_bottom_navigation: ^0.3.2
+  implicitly_animated_reorderable_list: ^0.1.10
 
   # utility widgets
   logger: ^0.8.3 

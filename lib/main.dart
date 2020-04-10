@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:openinventory_student_app/controllers/cart.dart';
 import 'package:openinventory_student_app/views/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,7 @@ void main() {
 /// [BaseUrlController]
 ///     - [TokenController]
 ///         - [ApiController]
+///             - [CartController]
 ///               - [OpenInventoryApp]
 ///
 /// [OpenInventoryApp] is provided as a proxy provider of
@@ -44,7 +46,10 @@ class App extends StatelessWidget {
             tokenController: t,
           ),
           lazy: false,
-          child: OpenInventoryApp(),
+          child: ChangeNotifierProvider<CartController>(
+            child: OpenInventoryApp(),
+            create: (_) => CartController(),
+          ),
         ),
       ),
     );

@@ -2,6 +2,7 @@
 library router_routes;
 
 import 'package:openinventory_student_app/views/pages/home.dart';
+import 'package:openinventory_student_app/views/pages/item.dart';
 import 'package:openinventory_student_app/views/pages/lab.dart';
 import 'package:openinventory_student_app/views/pages/login.dart';
 import 'package:openinventory_student_app/views/pages/splash.dart';
@@ -17,4 +18,6 @@ void defineAllRoutes() {
   router.defineRoute(
       path: "/home/lab/:id",
       handler: (_, params) => LabPage(id: params['id'][0]));
+  router.defineRoute(
+      path: "/item/:id", handler: (_, params) => ItemPage(id: params['id'][0]));
 }

@@ -2,11 +2,14 @@
 library controller_api;
 
 import 'package:flutter/widgets.dart';
+import 'package:openinventory_student_app/api/responses/item.dart';
+import 'package:openinventory_student_app/api/responses/labitem.dart';
 import 'package:provider/provider.dart';
 
-import 'package:openinventory_student_app/api/responses/user.dart';
 import './base_url.dart';
 import '../api/api_client.dart';
+import '../api/responses/lab.dart';
+import '../api/responses/user.dart';
 import './token.dart';
 
 /// Controller which encapsulates [ApiClient]
@@ -67,6 +70,13 @@ class ApiController {
     return Provider.of<ApiController>(context, listen: false);
   }
 
+  /// Helper method to make consuming this object easy
+  ///
+  /// This will listen to future emissions from api controller
+  static ApiController listenOf(BuildContext context) {
+    return Provider.of<ApiController>(context, listen: true);
+  }
+
   /// Logs the user in using the given credentials.
   ///
   /// Sends a login request and stores the recieved token.
@@ -91,12 +101,16 @@ class ApiController {
     await _tokenController.logout();
   }
 
-  /// Sends a demonstration request
-  ///
-  /// This is just a demo method to make sure the user is authenticated.
-  /// Unauthenticated users will get an error.
-  Future<void> demoCall() {
-    return _client.demo();
+  Future<List<LabResponse>> labList() async {
+    return await _client.labsList();
+  }
+
+  Future<List<LabItemResponse>> labItemsList(String labId) async {
+    return await _client.labItemsList(labId);
+  }
+
+  Future<ItemResponse> item(String itemId) async {
+    return await _client.item(itemId);
   }
 
   /// Information of the current logged in user

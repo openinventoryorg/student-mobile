@@ -4,27 +4,40 @@ library view_section_browse;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:openinventory_student_app/api/responses/lab.dart';
+import 'package:openinventory_student_app/constants.dart';
+import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/routes/router.dart';
 import 'package:openinventory_student_app/views/colors.dart';
 
 class BrowseSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      physics: BouncingScrollPhysics(),
-      crossAxisCount: 2,
-      children: <Widget>[
-        LabCard(),
-        LabCard(),
-        LabCard(),
-        LabCard(),
-        LabCard(),
-      ],
+    return FutureBuilder<List<LabResponse>>(
+      future: ApiController.listenOf(context).labList(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData || snapshot.data == null)
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+
+        return GridView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: snapshot.data.length,
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemBuilder: (context, index) => LabCard(lab: snapshot.data[index]),
+        );
+      },
     );
   }
 }
 
 class LabCard extends StatelessWidget {
+  final LabResponse lab;
+
+  const LabCard({Key key, @required this.lab}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,10 +47,10 @@ class LabCard extends StatelessWidget {
         child: GridTile(
           child: Container(
             color: AppColors.colorB,
-            child: Icon(
-              LineIcons.laptop,
-              size: 56,
-            ),
+            child: lab.image == null
+                ? Icon(LineIcons.laptop, size: 56)
+                : Image.network('$CLOUDINARY_URL/${lab.image}',
+                    fit: BoxFit.cover),
           ),
           footer: Container(
             padding: EdgeInsets.all(8),
@@ -45,13 +58,13 @@ class LabCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 AutoSizeText(
-                  'Embedded Systems Laboratory',
+                  lab.title,
                   style: _LabCardStyles.title,
                   textAlign: TextAlign.center,
                   maxLines: 2,
                 ),
                 AutoSizeText(
-                  'Lab on floor 13',
+                  lab.subtitle,
                   style: _LabCardStyles.subtitle,
                   textAlign: TextAlign.center,
                   maxLines: 1,
@@ -65,7 +78,7 @@ class LabCard extends StatelessWidget {
   }
 
   void onLabCardPress(BuildContext context) {
-    AppRouter.navigate(context, '/home/lab/1');
+    AppRouter.navigate(context, '/home/lab/${lab.id}');
   }
 }
 
