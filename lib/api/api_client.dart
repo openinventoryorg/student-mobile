@@ -47,7 +47,7 @@ class ApiClient {
   /// # POST /login
   Future<TokenResponse> login(String email, String password) async {
     try {
-      String endPoint = '$_baseUrl/login';
+      String endPoint = '$_baseUrl/api/login';
       var request = LoginRequest(email: email, password: password);
       var response = await _dio.post(endPoint, data: request.toJson());
       return TokenResponse.fromJson(response.data);
@@ -63,7 +63,7 @@ class ApiClient {
   /// # Get /labs/list
   Future<List<LabResponse>> labsList() async {
     try {
-      String endPoint = '$_baseUrl/labs/list';
+      String endPoint = '$_baseUrl/api/labs/list';
       var response = await _dio.get(endPoint);
       return LabListResponse.fromJson(response.data).labs;
     } catch (err) {
@@ -74,7 +74,7 @@ class ApiClient {
   /// # Get /labs/list
   Future<List<LabItemResponse>> labItemsList(String labId) async {
     try {
-      String endPoint = '$_baseUrl/labs/$labId/items';
+      String endPoint = '$_baseUrl/api/labs/$labId/items';
       var response = await _dio.get(endPoint);
       return LabItemListResponse.fromJson(response.data).labItems;
     } catch (err) {
@@ -85,7 +85,7 @@ class ApiClient {
   /// # Get /items/:ID
   Future<ItemResponse> item(String itemId) async {
     try {
-      String endPoint = '$_baseUrl/items/$itemId';
+      String endPoint = '$_baseUrl/api/items/$itemId';
       var response = await _dio.get(endPoint);
       return ItemResponse.fromJson(response.data);
     } catch (err) {
