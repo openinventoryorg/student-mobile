@@ -63,6 +63,12 @@ class CartController extends ChangeNotifier {
     }
     return cart[cartId].contains(itemId);
   }
+
+  void clearCart(String cartId) {
+    if (cart.containsKey(cartId)) {
+      cart[cartId].clear();
+    }
+  }
 }
 
 /// Data class with operators overloaded to be used as cart item

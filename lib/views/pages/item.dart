@@ -3,7 +3,6 @@ import 'package:line_icons/line_icons.dart';
 import 'package:openinventory_student_app/api/responses/item.dart';
 import 'package:openinventory_student_app/constants.dart';
 import 'package:openinventory_student_app/controllers/api.dart';
-import 'package:openinventory_student_app/views/pages/components/item_image.dart';
 
 class ItemPage extends StatefulWidget {
   final String id;
