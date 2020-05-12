@@ -27,7 +27,7 @@
     <li><a href="../../index.html">openinventory_student_app</a></li>
     <li><a href="../../view_section_browse/view_section_browse-library.html">view_section_browse</a></li>
     <li><a href="../../view_section_browse/LabCard-class.html">LabCard</a></li>
-    <li class="self-crumb">LabCard constructor</li>
+    <li class="self-crumb">LabCard const constructor</li>
   </ol>
   <div class="self-name">LabCard</div>
   <form class="search navbar-right" role="search">
@@ -48,7 +48,7 @@
       <li><a href="../../index.html">openinventory_student_app</a></li>
       <li><a href="../../view_section_browse/view_section_browse-library.html">view_section_browse</a></li>
       <li><a href="../../view_section_browse/LabCard-class.html">LabCard</a></li>
-      <li class="self-crumb">LabCard constructor</li>
+      <li class="self-crumb">LabCard const constructor</li>
     </ol>
     
     <h5>LabCard class</h5>
@@ -57,9 +57,10 @@
       <li class="section-title"><a href="../../view_section_browse/LabCard-class.html#constructors">Constructors</a></li>
       <li><a href="../../view_section_browse/LabCard/LabCard.html">LabCard</a></li>
     
-      <li class="section-title inherited">
+      <li class="section-title">
         <a href="../../view_section_browse/LabCard-class.html#instance-properties">Properties</a>
       </li>
+      <li><a href="../../view_section_browse/LabCard/lab.html">lab</a></li>
       <li class="inherited"><a href="../../view_section_browse/LabCard/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="../../view_section_browse/LabCard/key.html">key</a></li>
       <li class="inherited"><a href="../../view_section_browse/LabCard/runtimeType.html">runtimeType</a></li>
@@ -90,12 +91,17 @@
       <div><h1><span class="kind-constructor">LabCard</span> constructor</h1></div>
 
     <section class="multi-line-signature">
-      
-      <span class="name ">LabCard</span>(<wbr>)
+      const
+      <span class="name ">LabCard</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-key">{<span class="type-annotation">Key</span> <span class="parameter-name">key</span>, </span></li>
+<li><span class="parameter" id="-param-lab"><span>@required</span> <span class="type-annotation"><a href="../../response_labs/LabResponse-class.html">LabResponse</a></span> <span class="parameter-name">lab</span>}</span></li>
+</ol>)
     </section>
 
     
-    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">const LabCard({Key key, @required this.lab}) : super(key: key);</code></pre>
+    </section>
 
   </div> <!-- /.main-content -->
 

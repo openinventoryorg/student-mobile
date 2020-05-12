@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:openinventory_student_app/api/responses/labitem.dart';
+import 'package:openinventory_student_app/constants.dart';
 import 'package:openinventory_student_app/controllers/cart.dart';
 import 'package:openinventory_student_app/helpers.dart';
 import 'package:openinventory_student_app/routes/router.dart';
-import 'package:openinventory_student_app/views/pages/components/item_image.dart';
+import 'package:openinventory_student_app/views/colors.dart';
 
 class LabItemCard extends StatelessWidget {
   const LabItemCard({
@@ -24,38 +24,35 @@ class LabItemCard extends StatelessWidget {
         .isInCart(labId, CartItem.fromLabItemResponse(labItem));
 
     return ListTile(
-      leading: Container(
-        padding: EdgeInsets.only(left: 8),
-        color: isPickedUp ? Colors.green : Colors.red,
-        child: ItemImage(
-          id: labItem.id,
-          image: labItem.itemSet.image,
-        ),
-      ),
-      trailing: Hero(
-        tag: '${labItem.id}-button',
-        child: Material(
-          child: CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor,
-            child: IconButton(
-              color: Colors.white,
-              icon: AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                child:
-                    isPickedUp ? Icon(LineIcons.minus) : Icon(LineIcons.plus),
+      leading: AspectRatio(
+        aspectRatio: 1,
+        child: labItem.itemSet.image == null
+            ? Container(color: Theme.of(context).primaryColor)
+            : Image.network(
+                '$CLOUDINARY_URL/${labItem.itemSet.image}',
+                fit: BoxFit.cover,
               ),
-              onPressed: () {
-                var cart = CartController.of(context);
-                var cartItem = CartItem.fromLabItemResponse(labItem);
-                if (isPickedUp) {
-                  cart.removeItem(labId, cartItem);
-                } else {
-                  cart.addItem(labId, cartItem);
-                }
-              },
-            ),
-          ),
-        ),
+      ),
+      trailing: RaisedButton(
+        textColor: Colors.white,
+        color: isPickedUp ? Theme.of(context).accentColor : AppColors.colorD,
+        child: Text(isPickedUp ? 'Remove' : 'Add'),
+        onPressed: () {
+          var cart = CartController.of(context);
+          var cartItem = CartItem.fromLabItemResponse(labItem);
+          try {
+            if (isPickedUp) {
+              cart.removeItem(labId, cartItem);
+            } else {
+              cart.addItem(labId, cartItem);
+            }
+          } catch (err) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(err.toString()),
+              backgroundColor: Colors.red,
+            ));
+          }
+        },
       ),
       title: Text(
         Helpers.capitalize(labItem.itemSet.title),

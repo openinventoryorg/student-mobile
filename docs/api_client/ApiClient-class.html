@@ -111,13 +111,31 @@
     <section class="summary offset-anchor" id="instance-methods">
       <h2>Methods</h2>
       <dl class="callables">
-        <dt id="demo" class="callable">
-          <span class="name"><a href="../api_client/ApiClient/demo.html">demo</a></span><span class="signature">(<wbr>)
-            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+        <dt id="item" class="callable">
+          <span class="name"><a href="../api_client/ApiClient/item.html">item</a></span><span class="signature">(<wbr><span class="parameter" id="item-param-itemId"><span class="type-annotation">String</span> <span class="parameter-name">itemId</span></span><wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter"><a href="../response_item/ItemResponse-class.html">ItemResponse</a></span>&gt;</span></span>
           </span>
                   </dt>
         <dd>
-          GET /demo 
+          Get /items/:ID 
+                  
+</dd>
+        <dt id="labItemsList" class="callable">
+          <span class="name"><a href="../api_client/ApiClient/labItemsList.html">labItemsList</a></span><span class="signature">(<wbr><span class="parameter" id="labItemsList-param-labId"><span class="type-annotation">String</span> <span class="parameter-name">labId</span></span><wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="../response_labitem/LabItemResponse-class.html">LabItemResponse</a></span>&gt;</span></span>&gt;</span></span>
+          </span>
+                  </dt>
+        <dd>
+          Get /labs/list 
+                  
+</dd>
+        <dt id="labsList" class="callable">
+          <span class="name"><a href="../api_client/ApiClient/labsList.html">labsList</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="../response_labs/LabResponse-class.html">LabResponse</a></span>&gt;</span></span>&gt;</span></span>
+          </span>
+                  </dt>
+        <dd>
+          Get /labs/list 
                   
 </dd>
         <dt id="login" class="callable">
@@ -201,7 +219,9 @@
       <li class="inherited"><a href="../api_client/ApiClient/runtimeType.html">runtimeType</a></li>
     
       <li class="section-title"><a href="../api_client/ApiClient-class.html#instance-methods">Methods</a></li>
-      <li><a href="../api_client/ApiClient/demo.html">demo</a></li>
+      <li><a href="../api_client/ApiClient/item.html">item</a></li>
+      <li><a href="../api_client/ApiClient/labItemsList.html">labItemsList</a></li>
+      <li><a href="../api_client/ApiClient/labsList.html">labsList</a></li>
       <li><a href="../api_client/ApiClient/login.html">login</a></li>
       <li><a href="../api_client/ApiClient/setToken.html">setToken</a></li>
       <li><a href="../api_client/ApiClient/throwError.html">throwError</a></li>

@@ -142,13 +142,31 @@ This also takes care of some errors which occur when calling the API.</p>
     <section class="summary offset-anchor" id="instance-methods">
       <h2>Methods</h2>
       <dl class="callables">
-        <dt id="demoCall" class="callable">
-          <span class="name"><a href="../controller_api/ApiController/demoCall.html">demoCall</a></span><span class="signature">(<wbr>)
-            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+        <dt id="item" class="callable">
+          <span class="name"><a href="../controller_api/ApiController/item.html">item</a></span><span class="signature">(<wbr><span class="parameter" id="item-param-itemId"><span class="type-annotation">String</span> <span class="parameter-name">itemId</span></span><wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter"><a href="../response_item/ItemResponse-class.html">ItemResponse</a></span>&gt;</span></span>
           </span>
                   </dt>
         <dd>
-          Sends a demonstration request <a href="../controller_api/ApiController/demoCall.html">[...]</a>
+           
+                  
+</dd>
+        <dt id="labItemsList" class="callable">
+          <span class="name"><a href="../controller_api/ApiController/labItemsList.html">labItemsList</a></span><span class="signature">(<wbr><span class="parameter" id="labItemsList-param-labId"><span class="type-annotation">String</span> <span class="parameter-name">labId</span></span><wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="../response_labitem/LabItemResponse-class.html">LabItemResponse</a></span>&gt;</span></span>&gt;</span></span>
+          </span>
+                  </dt>
+        <dd>
+           
+                  
+</dd>
+        <dt id="labList" class="callable">
+          <span class="name"><a href="../controller_api/ApiController/labList.html">labList</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; Future<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="../response_labs/LabResponse-class.html">LabResponse</a></span>&gt;</span></span>&gt;</span></span>
+          </span>
+                  </dt>
+        <dd>
+           
                   
 </dd>
         <dt id="logIn" class="callable">
@@ -209,6 +227,15 @@ This also takes care of some errors which occur when calling the API.</p>
     <section class="summary offset-anchor" id="static-methods">
       <h2>Static Methods</h2>
       <dl class="callables">
+        <dt id="listenOf" class="callable">
+          <span class="name"><a href="../controller_api/ApiController/listenOf.html">listenOf</a></span><span class="signature">(<wbr><span class="parameter" id="listenOf-param-context"><span class="type-annotation">BuildContext</span> <span class="parameter-name">context</span></span><wbr>)
+            <span class="returntype parameter">&#8594; <a href="../controller_api/ApiController-class.html">ApiController</a></span>
+          </span>
+                  </dt>
+        <dd>
+          Helper method to make consuming this object easy <a href="../controller_api/ApiController/listenOf.html">[...]</a>
+                  
+</dd>
         <dt id="of" class="callable">
           <span class="name"><a href="../controller_api/ApiController/of.html">of</a></span><span class="signature">(<wbr><span class="parameter" id="of-param-context"><span class="type-annotation">BuildContext</span> <span class="parameter-name">context</span></span><wbr>)
             <span class="returntype parameter">&#8594; <a href="../controller_api/ApiController-class.html">ApiController</a></span>
@@ -233,7 +260,7 @@ This also takes care of some errors which occur when calling the API.</p>
           User role that should be permitted to the app. <a href="../controller_api/ApiController/permittedRole-constant.html">[...]</a>
                   
   <div>
-            <span class="signature"><code>&#39;Student&#39;</code></span>
+            <span class="signature"><code>&#39;student&#39;</code></span>
           </div>
         </dd>
       </dl>
@@ -256,7 +283,9 @@ This also takes care of some errors which occur when calling the API.</p>
       <li class="inherited"><a href="../controller_api/ApiController/runtimeType.html">runtimeType</a></li>
     
       <li class="section-title"><a href="../controller_api/ApiController-class.html#instance-methods">Methods</a></li>
-      <li><a href="../controller_api/ApiController/demoCall.html">demoCall</a></li>
+      <li><a href="../controller_api/ApiController/item.html">item</a></li>
+      <li><a href="../controller_api/ApiController/labItemsList.html">labItemsList</a></li>
+      <li><a href="../controller_api/ApiController/labList.html">labList</a></li>
       <li><a href="../controller_api/ApiController/logIn.html">logIn</a></li>
       <li><a href="../controller_api/ApiController/logOut.html">logOut</a></li>
       <li class="inherited"><a href="../controller_api/ApiController/noSuchMethod.html">noSuchMethod</a></li>
@@ -267,6 +296,7 @@ This also takes care of some errors which occur when calling the API.</p>
     
     
       <li class="section-title"><a href="../controller_api/ApiController-class.html#static-methods">Static methods</a></li>
+      <li><a href="../controller_api/ApiController/listenOf.html">listenOf</a></li>
       <li><a href="../controller_api/ApiController/of.html">of</a></li>
     
       <li class="section-title"><a href="../controller_api/ApiController-class.html#constants">Constants</a></li>

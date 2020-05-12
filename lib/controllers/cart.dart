@@ -30,6 +30,8 @@ class CartController extends ChangeNotifier {
 
     if (cart[cartId].length < CART_LIMIT) {
       cart[cartId].add(item);
+    } else {
+      throw Exception('Cart limit is $CART_LIMIT');
     }
     notifyListeners();
   }

@@ -57,9 +57,10 @@
         <li class="section-title"><a href="../../view_section_browse/LabCard-class.html#constructors">Constructors</a></li>
         <li><a href="../../view_section_browse/LabCard/LabCard.html">LabCard</a></li>
     
-        <li class="section-title inherited">
+        <li class="section-title">
             <a href="../../view_section_browse/LabCard-class.html#instance-properties">Properties</a>
         </li>
+        <li><a href="../../view_section_browse/LabCard/lab.html">lab</a></li>
         <li class="inherited"><a href="../../view_section_browse/LabCard/hashCode.html">hashCode</a></li>
         <li class="inherited"><a href="../../view_section_browse/LabCard/key.html">key</a></li>
         <li class="inherited"><a href="../../view_section_browse/LabCard/runtimeType.html">runtimeType</a></li>
@@ -147,10 +148,10 @@ Widget build(BuildContext context) {
       child: GridTile(
         child: Container(
           color: AppColors.colorB,
-          child: Icon(
-            LineIcons.laptop,
-            size: 56,
-          ),
+          child: lab.image == null
+              ? Icon(LineIcons.laptop, size: 56)
+              : Image.network(&#39;$CLOUDINARY_URL&#47;${lab.image}&#39;,
+                  fit: BoxFit.cover),
         ),
         footer: Container(
           padding: EdgeInsets.all(8),
@@ -158,13 +159,13 @@ Widget build(BuildContext context) {
           child: Column(
             children: &lt;Widget&gt;[
               AutoSizeText(
-                &#39;Embedded Systems Laboratory&#39;,
+                lab.title,
                 style: _LabCardStyles.title,
                 textAlign: TextAlign.center,
                 maxLines: 2,
               ),
               AutoSizeText(
-                &#39;Lab on floor 13&#39;,
+                lab.subtitle,
                 style: _LabCardStyles.subtitle,
                 textAlign: TextAlign.center,
                 maxLines: 1,

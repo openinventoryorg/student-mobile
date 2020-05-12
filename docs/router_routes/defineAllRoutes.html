@@ -86,6 +86,8 @@
   router.defineRoute(
       path: &quot;&#47;home&#47;lab&#47;:id&quot;,
       handler: (_, params) =&gt; LabPage(id: params[&#39;id&#39;][0]));
+  router.defineRoute(
+      path: &quot;&#47;item&#47;:id&quot;, handler: (_, params) =&gt; ItemPage(id: params[&#39;id&#39;][0]));
 }</code></pre>
     </section>
 

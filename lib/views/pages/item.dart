@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:openinventory_student_app/api/responses/item.dart';
+import 'package:openinventory_student_app/constants.dart';
 import 'package:openinventory_student_app/controllers/api.dart';
-import 'package:openinventory_student_app/controllers/cart.dart';
 import 'package:openinventory_student_app/views/pages/components/item_image.dart';
 
 class ItemPage extends StatefulWidget {
@@ -46,8 +46,17 @@ class _ItemPageState extends State<ItemPage> {
                   title: Text(item.capitalizedTitle),
                   expandedHeight: 300,
                   flexibleSpace: FlexibleSpaceBar(
-                    background:
-                        ItemImage(id: widget.id, image: item.itemSet.image),
+                    background: item.itemSet.image == null
+                        ? Container(
+                            color: Theme.of(context).primaryColor,
+                          )
+                        : Image.network(
+                            '$CLOUDINARY_URL/${item.itemSet.image}',
+                            fit: BoxFit.cover,
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.8),
+                            colorBlendMode: BlendMode.srcATop,
+                          ),
                   ),
                 ),
                 SliverList(
@@ -71,27 +80,6 @@ class _ItemPageState extends State<ItemPage> {
                   ]),
                 ),
               ],
-            ),
-      floatingActionButton: item == null
-          ? null
-          : FloatingActionButton(
-              heroTag: '${widget.id}-button',
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                child: CartController.listenOf(context)
-                        .isInCart(item.lab.id, CartItem.fromItemResponse(item))
-                    ? Icon(LineIcons.minus)
-                    : Icon(LineIcons.plus),
-              ),
-              onPressed: () {
-                var cart = CartController.of(context);
-                var cartItem = CartItem.fromItemResponse(item);
-                if (cart.isInCart(item.lab.id, cartItem)) {
-                  cart.removeItem(item.lab.id, cartItem);
-                } else {
-                  cart.addItem(item.lab.id, cartItem);
-                }
-              },
             ),
     );
   }

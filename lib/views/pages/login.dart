@@ -1,7 +1,6 @@
 /// Login page which handles user login
 library view_page_login;
 
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:line_icons/line_icons.dart';
@@ -41,10 +40,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        physics: BouncingScrollPhysics(),
         children: <Widget>[
           signInLogo(context),
           form(context),
+          SizedBox(height: 32),
         ],
       ),
     );
@@ -98,19 +97,22 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: switchPasswordVisibility,
             ),
           ),
-          RaisedButton(
-            color: AppColors.colorD,
-            textColor: Colors.white,
-            onPressed: _asyncCallOngoing ? () {} : onSignInPressed,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text('Sign-in'),
-                ),
-                buttonIcon(),
-              ],
+          Builder(
+            builder: (context) => RaisedButton(
+              color: AppColors.colorD,
+              textColor: Colors.white,
+              onPressed:
+                  _asyncCallOngoing ? () {} : () => onSignInPressed(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text('Sign-in'),
+                  ),
+                  buttonIcon(),
+                ],
+              ),
             ),
           ),
         ],
@@ -169,18 +171,18 @@ class _LoginPageState extends State<LoginPage> {
 
   /// Log the user in using the text box values.
   /// If failed, shows a flush bar.
-  void onSignInPressed() async {
+  void onSignInPressed(BuildContext context) async {
     String baseUrl = _baseUrlController.text.trim();
     String email = _emailController.text.trim();
     String password = _passwordController.text;
     if (baseUrl.isEmpty) {
-      showFlushbar('Validation Error', 'Organization Url must be provided');
+      showSnackBar(context, 'Organization Url must be provided');
     } else if (email.isEmpty) {
-      showFlushbar('Validation Error', 'Email must be provided');
+      showSnackBar(context, 'Email must be provided');
     } else if (!RegExp(emailRegex).hasMatch(email)) {
-      showFlushbar('Validation Error', 'Email is of invalid format');
+      showSnackBar(context, 'Email is of invalid format');
     } else if (password.isEmpty) {
-      showFlushbar('Validation Error', 'Password must be provided');
+      showSnackBar(context, 'Password must be provided');
     } else {
       updateAsyncCallStatus(true);
       try {
@@ -188,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
         await ApiController.of(context).logIn(email, password);
         AppRouter.freshNavigate(context, '/home');
       } catch (err) {
-        showFlushbar('Invalid Data', err.toString());
+        showSnackBar(context, err.message);
       } finally {
         updateAsyncCallStatus(false);
       }
@@ -207,20 +209,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   /// Shows a error message flush bar
-  void showFlushbar(String title, String subtitle) {
-    Flushbar(
-      title: title,
-      message: subtitle,
-      animationDuration: Duration(milliseconds: 200),
-      icon: Icon(Icons.error, color: Colors.white),
-      backgroundColor: AppColors.colorC,
-      duration: Duration(seconds: 1) * 2,
-      leftBarIndicatorColor: AppColors.colorE,
-      mainButton: FlatButton(
-        child: Text('CLOSE'),
-        onPressed: () => Navigator.pop(context),
-        textColor: Colors.white,
-      ),
-    )..show(context);
+  void showSnackBar(BuildContext context, String subtitle) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(subtitle),
+      backgroundColor: Colors.red,
+    ));
   }
 }

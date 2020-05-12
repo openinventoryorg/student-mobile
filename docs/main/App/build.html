@@ -153,7 +153,10 @@ Widget build(BuildContext context) {
           tokenController: t,
         ),
         lazy: false,
-        child: OpenInventoryApp(),
+        child: ChangeNotifierProvider&lt;CartController&gt;(
+          child: OpenInventoryApp(),
+          create: (_) =&gt; CartController(),
+        ),
       ),
     ),
   );

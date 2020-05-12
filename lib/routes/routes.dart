@@ -1,6 +1,7 @@
 /// Defines routes used in the app
 library router_routes;
 
+import 'package:openinventory_student_app/views/pages/form.dart';
 import 'package:openinventory_student_app/views/pages/home.dart';
 import 'package:openinventory_student_app/views/pages/item.dart';
 import 'package:openinventory_student_app/views/pages/lab.dart';
@@ -20,4 +21,6 @@ void defineAllRoutes() {
       handler: (_, params) => LabPage(id: params['id'][0]));
   router.defineRoute(
       path: "/item/:id", handler: (_, params) => ItemPage(id: params['id'][0]));
+  router.defineRoute(
+      path: "/lend/:id", handler: (_, params) => LendForm(id: params['id'][0]));
 }

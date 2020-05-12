@@ -139,16 +139,22 @@ and</li>
       <h2><span>Implementation</span></h2>
       <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
-  return GridView.count(
-    physics: BouncingScrollPhysics(),
-    crossAxisCount: 2,
-    children: &lt;Widget&gt;[
-      LabCard(),
-      LabCard(),
-      LabCard(),
-      LabCard(),
-      LabCard(),
-    ],
+  return FutureBuilder&lt;List&lt;LabResponse&gt;&gt;(
+    future: ApiController.listenOf(context).labList(),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData || snapshot.data == null)
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+
+      return GridView.builder(
+        physics: BouncingScrollPhysics(),
+        itemCount: snapshot.data.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (context, index) =&gt; LabCard(lab: snapshot.data[index]),
+      );
+    },
   );
 }</code></pre>
     </section>
