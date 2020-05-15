@@ -39,13 +39,14 @@ class RequestCard extends StatelessWidget {
     return ExpansionTile(
       key: Key(request.lab.id),
       title: Text(
-        request.capitalizedStatus,
+        Helpers.capitalize(request.lab.title),
         style: TextStyle(fontWeight: FontWeight.w900),
       ),
       leading: CircleAvatar(
         child: Text('${request.requestItems.length}'),
       ),
-      subtitle: Text(timeago.format(request.updatedAt)),
+      subtitle: Text(
+          "${request.capitalizedStatus} ${timeago.format(request.updatedAt)}"),
       trailing: Icon(LineIcons.angle_down),
       children: <Widget>[
         for (var request in request.requestItems)
