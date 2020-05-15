@@ -10,7 +10,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import '../api/responses/token.dart';
-import '../api/responses/user.dart';
 
 /// Class that keeps track of the token of the user.
 class TokenController extends ChangeNotifier {

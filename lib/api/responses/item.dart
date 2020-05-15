@@ -2,8 +2,6 @@
 library response_item;
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:openinventory_student_app/api/responses/itemattribute.dart';
-import 'package:openinventory_student_app/api/responses/itemlab.dart';
 import 'package:openinventory_student_app/api/responses/itemset.dart';
 import 'package:openinventory_student_app/helpers.dart';
 
@@ -20,8 +18,12 @@ class ItemResponse {
   @JsonKey(name: 'ItemAttributes')
   final List<ItemAttributeResponse> itemAttributes;
 
-  ItemResponse(this.lab,
-      {this.id, this.serialNumber, this.itemSet, this.itemAttributes});
+  ItemResponse(
+      {this.lab,
+      this.id,
+      this.serialNumber,
+      this.itemSet,
+      this.itemAttributes});
 
   factory ItemResponse.fromJson(Map<String, dynamic> json) =>
       _$ItemResponseFromJson(json);
@@ -34,4 +36,42 @@ class ItemResponse {
   }
 
   String get capitalizedTitle => Helpers.capitalize(itemSet.title);
+}
+
+@JsonSerializable(nullable: false)
+class ItemAttributeResponse {
+  final String key;
+  final String value;
+
+  ItemAttributeResponse({this.key, this.value});
+
+  factory ItemAttributeResponse.fromJson(Map<String, dynamic> json) =>
+      _$ItemAttributeResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ItemAttributeResponseToJson(this);
+
+  @override
+  String toString() {
+    return '$key: $value';
+  }
+}
+
+@JsonSerializable(nullable: false)
+class ItemLabResponse {
+  final String id;
+  final String title;
+  final String subtitle;
+  final String image;
+
+  ItemLabResponse({this.id, this.title, this.subtitle, this.image});
+
+  factory ItemLabResponse.fromJson(Map<String, dynamic> json) =>
+      _$ItemLabResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ItemLabResponseToJson(this);
+
+  @override
+  String toString() {
+    return '$title: $subtitle';
+  }
 }

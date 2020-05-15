@@ -33,27 +33,37 @@ class LabItemCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
       ),
-      trailing: RaisedButton(
-        textColor: Colors.white,
-        color: isPickedUp ? Theme.of(context).accentColor : AppColors.colorD,
-        child: Text(isPickedUp ? 'Remove' : 'Add'),
-        onPressed: () {
-          var cart = CartController.of(context);
-          var cartItem = CartItem.fromLabItemResponse(labItem);
-          try {
-            if (isPickedUp) {
-              cart.removeItem(labId, cartItem);
-            } else {
-              cart.addItem(labId, cartItem);
-            }
-          } catch (err) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(err.toString()),
-              backgroundColor: Colors.red,
-            ));
-          }
-        },
-      ),
+      trailing: labItem.isAvailable
+          ? RaisedButton(
+              textColor: Colors.white,
+              color:
+                  isPickedUp ? Theme.of(context).accentColor : AppColors.colorD,
+              child: Text(isPickedUp ? 'Remove' : 'Add'),
+              onPressed: () {
+                var cart = CartController.of(context);
+                var cartItem = CartItem.fromLabItemResponse(labItem);
+                try {
+                  if (isPickedUp) {
+                    cart.removeItem(labId, cartItem);
+                  } else {
+                    cart.addItem(labId, cartItem);
+                  }
+                } catch (err) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(err.toString()),
+                    backgroundColor: Colors.red,
+                  ));
+                }
+              },
+            )
+          : Text(
+              'UNAVAILABLE',
+              style: TextStyle(
+                color: Colors.red[800],
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+              ),
+            ),
       title: Text(
         Helpers.capitalize(labItem.itemSet.title),
         style: TextStyle(

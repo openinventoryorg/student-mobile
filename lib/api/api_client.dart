@@ -4,15 +4,13 @@ library api_client;
 import 'package:dio/dio.dart';
 import 'package:openinventory_student_app/api/requests/lend.dart';
 import 'package:openinventory_student_app/api/responses/item.dart';
-import 'package:openinventory_student_app/api/responses/labitem.dart';
-import 'package:openinventory_student_app/api/responses/supervisorlist.dart';
+import 'package:openinventory_student_app/api/responses/supervisor.dart';
 
 import '../controllers/token.dart';
 import './requests/login.dart';
 import './responses/error_message.dart';
 import './responses/token.dart';
-import './responses/labitemlist.dart';
-import './responses/lablist.dart';
+import './responses/labitem.dart';
 import './responses/lab.dart';
 
 /// Class that handles all API calls (requests and responses)
@@ -78,6 +76,7 @@ class ApiClient {
     try {
       String endPoint = '$_baseUrl/api/labs/$labId/items';
       var response = await _dio.get(endPoint);
+      print(response.data);
       return LabItemListResponse.fromJson(response.data).labItems;
     } catch (err) {
       throw throwError(err);
@@ -110,6 +109,18 @@ class ApiClient {
     try {
       String endPoint = '$_baseUrl/api/requestitems/create';
       var response = await _dio.post(endPoint, data: request.toJson());
+      if (response.statusCode != 200) {
+        throw Exception('Something went wrong! Please try again');
+      }
+    } catch (err) {
+      throw throwError(err);
+    }
+  }
+
+  Future<void> getHistory() async {
+    try {
+      String endPoint = '$_baseUrl/api/requestitems/requester/list';
+      var response = await _dio.get(endPoint);
       if (response.statusCode != 200) {
         throw Exception('Something went wrong! Please try again');
       }

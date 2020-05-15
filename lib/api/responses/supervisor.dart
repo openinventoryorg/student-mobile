@@ -1,9 +1,21 @@
 /// Item information from server
-library response_supervisor;
+library response_supervisor_list;
 
 import 'package:json_annotation/json_annotation.dart';
 
 part 'supervisor.g.dart';
+
+@JsonSerializable(nullable: false)
+class SupervisorListResponse {
+  final List<SupervisorResponse> supervisors;
+
+  SupervisorListResponse({this.supervisors});
+
+  factory SupervisorListResponse.fromJson(Map<String, dynamic> json) =>
+      _$SupervisorListResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SupervisorListResponseToJson(this);
+}
 
 @JsonSerializable(nullable: false)
 class SupervisorResponse {

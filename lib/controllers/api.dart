@@ -5,13 +5,13 @@ import 'package:flutter/widgets.dart';
 import 'package:openinventory_student_app/api/requests/lend.dart';
 import 'package:openinventory_student_app/api/responses/item.dart';
 import 'package:openinventory_student_app/api/responses/labitem.dart';
-import 'package:openinventory_student_app/api/responses/supervisorlist.dart';
+import 'package:openinventory_student_app/api/responses/lab.dart';
+import 'package:openinventory_student_app/api/responses/supervisor.dart';
+import 'package:openinventory_student_app/api/responses/token.dart';
 import 'package:provider/provider.dart';
 
 import './base_url.dart';
 import '../api/api_client.dart';
-import '../api/responses/lab.dart';
-import '../api/responses/user.dart';
 import './token.dart';
 
 /// Controller which encapsulates [ApiClient]

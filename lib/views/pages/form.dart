@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:openinventory_student_app/api/requests/lend.dart';
 import 'package:openinventory_student_app/api/responses/supervisor.dart';
-import 'package:openinventory_student_app/api/responses/supervisorlist.dart';
 import 'package:openinventory_student_app/constants.dart';
 import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/controllers/cart.dart';

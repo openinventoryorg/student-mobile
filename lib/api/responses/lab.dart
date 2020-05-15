@@ -1,9 +1,26 @@
-/// Labs information from server
-library response_labs;
+/// Lab List information from server
+library response_lab_list;
 
 import 'package:json_annotation/json_annotation.dart';
 
 part 'lab.g.dart';
+
+@JsonSerializable(nullable: false)
+class LabListResponse {
+  final List<LabResponse> labs;
+
+  LabListResponse({this.labs});
+
+  factory LabListResponse.fromJson(Map<String, dynamic> json) =>
+      _$LabListResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LabListResponseToJson(this);
+
+  @override
+  String toString() {
+    return '${labs.length} Labs';
+  }
+}
 
 @JsonSerializable(nullable: false)
 class LabResponse {
