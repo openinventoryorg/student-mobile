@@ -3,6 +3,7 @@ library api_client;
 
 import 'package:dio/dio.dart';
 import 'package:openinventory_student_app/api/requests/lend.dart';
+import 'package:openinventory_student_app/api/responses/history.dart';
 import 'package:openinventory_student_app/api/responses/item.dart';
 import 'package:openinventory_student_app/api/responses/supervisor.dart';
 
@@ -117,14 +118,13 @@ class ApiClient {
     }
   }
 
-  Future<void> getHistory() async {
+  Future<List<HistoryResponse>> getHistory() async {
     try {
       String endPoint = '$_baseUrl/api/requestitems/requester/list';
       var response = await _dio.get(endPoint);
-      if (response.statusCode != 200) {
-        throw Exception('Something went wrong! Please try again');
-      }
+      return HistoryListResponse.fromJson(response.data).requests;
     } catch (err) {
+      print(err);
       throw throwError(err);
     }
   }

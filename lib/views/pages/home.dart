@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 import 'package:openinventory_student_app/views/sections/browse.dart';
+import 'package:openinventory_student_app/views/sections/history.dart';
 import 'package:openinventory_student_app/views/sections/search.dart';
 import 'package:openinventory_student_app/views/sections/settings.dart';
 
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           BrowseSection(),
           SearchSection(),
-          Container(),
+          HistorySection(),
           SettingsSection(),
         ],
       ),

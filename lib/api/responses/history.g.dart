@@ -6,9 +6,22 @@ part of response_history;
 // JsonSerializableGenerator
 // **************************************************************************
 
+HistoryListResponse _$HistoryListResponseFromJson(Map<String, dynamic> json) {
+  return HistoryListResponse(
+    requests: (json['requests'] as List)
+        .map((e) => HistoryResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$HistoryListResponseToJson(
+        HistoryListResponse instance) =>
+    <String, dynamic>{
+      'requests': instance.requests,
+    };
+
 HistoryResponse _$HistoryResponseFromJson(Map<String, dynamic> json) {
   return HistoryResponse(
-    id: json['id'] as String,
     supervisorId: json['supervisorId'] as String,
     status: json['status'] as String,
     requestItems: (json['RequestItems'] as List)
@@ -16,16 +29,17 @@ HistoryResponse _$HistoryResponseFromJson(Map<String, dynamic> json) {
             HistoryRequestItemResponse.fromJson(e as Map<String, dynamic>))
         .toList(),
     lab: HistoryLabResponse.fromJson(json['Lab'] as Map<String, dynamic>),
+    updatedAt: DateTime.parse(json['updatedAt'] as String),
   );
 }
 
 Map<String, dynamic> _$HistoryResponseToJson(HistoryResponse instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'supervisorId': instance.supervisorId,
       'status': instance.status,
       'RequestItems': instance.requestItems,
       'Lab': instance.lab,
+      'updatedAt': instance.updatedAt.toIso8601String(),
     };
 
 HistoryRequestItemResponse _$HistoryRequestItemResponseFromJson(
@@ -74,7 +88,8 @@ HistoryItemResponse _$HistoryItemResponseFromJson(Map<String, dynamic> json) {
   return HistoryItemResponse(
     id: json['id'] as String,
     serialNumber: json['serialNumber'] as String,
-  );
+  )..itemSet =
+      ItemsetResponse.fromJson(json['ItemSet'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$HistoryItemResponseToJson(
@@ -82,4 +97,5 @@ Map<String, dynamic> _$HistoryItemResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'serialNumber': instance.serialNumber,
+      'ItemSet': instance.itemSet,
     };
