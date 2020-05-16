@@ -5,6 +5,7 @@ library view_page_splash;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:openinventory_student_app/api/responses/token.dart';
 import 'package:openinventory_student_app/controllers/token.dart';
 import 'package:openinventory_student_app/routes/router.dart';
 
@@ -50,19 +51,21 @@ class _SplashScreenState extends State<SplashScreen> {
   /// Gets the user email and if the user is logged in redirects to home.
   /// Otherwise redirects to login page
   void _authenticate() async {
-    String currentUserEmail = await _getCurrentEmail();
+    UserResponse currentUser = await _getCurrentUser();
     setState(() {
-      _userEmail = currentUserEmail;
+      _userEmail = currentUser?.email;
     });
 
     // Wait a second to aviod flikrs
     await Future.delayed(Duration(seconds: 1));
 
     String targetRoute;
-    if (currentUserEmail == null) {
+    if (currentUser == null) {
       targetRoute = "/login";
-    } else {
+    } else if (currentUser.role == 'student') {
       targetRoute = "/home";
+    } else {
+      targetRoute = "/staff";
     }
 
     if (mounted) {
@@ -71,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   /// Gets current email from Controller.
-  Future<String> _getCurrentEmail() {
+  Future<UserResponse> _getCurrentUser() {
     return TokenController.of(context).tokenLoadedCompleter.future;
   }
 }

@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 
 import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/controllers/base_url.dart';
+import 'package:openinventory_student_app/controllers/token.dart';
 import 'package:openinventory_student_app/routes/router.dart';
 import 'package:openinventory_student_app/views/colors.dart';
 
@@ -188,7 +189,12 @@ class _LoginPageState extends State<LoginPage> {
       try {
         await BaseUrlController.of(context).setBaseUrl(baseUrl);
         await ApiController.of(context).logIn(email, password);
-        AppRouter.freshNavigate(context, '/home');
+        await Future.delayed(Duration(milliseconds: 500));
+        if (TokenController.of(context).tokenOfStaff == null) {
+          AppRouter.freshNavigate(context, '/home');
+        } else {
+          AppRouter.freshNavigate(context, '/staff');
+        }
       } catch (err) {
         showSnackBar(context, err.message);
       } finally {

@@ -39,24 +39,28 @@ class _HandledBuilderState<T> extends State<HandledBuilder<T>> {
     });
     try {
       T value = await widget.fetch();
-      setState(() => data = value);
+      if (mounted) {
+        setState(() => data = value);
+      }
     } catch (err) {
       String errMessage = err.toString();
       if (err is DioError) {
         errMessage = err.message;
       }
 
-      setState(() => hasError = true);
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text(errMessage, style: TextStyle(color: Colors.black)),
-          backgroundColor: Colors.amber,
-          action: SnackBarAction(
-            label: 'OK',
-            onPressed: Scaffold.of(context).hideCurrentSnackBar,
+      if (mounted) {
+        setState(() => hasError = true);
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text(errMessage, style: TextStyle(color: Colors.black)),
+            backgroundColor: Colors.amber,
+            action: SnackBarAction(
+              label: 'OK',
+              onPressed: Scaffold.of(context).hideCurrentSnackBar,
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 

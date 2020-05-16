@@ -21,14 +21,7 @@ import './token.dart';
 /// This also takes care of some errors which occur when calling the API.
 @immutable
 class ApiController {
-  /// User role that should be permitted to the app.
-  ///
-  /// If a user who does not belong to the specified role,
-  /// an error message will be shown.
-  /// This string effectively locks tha app to a specific role.
-  static const permittedRole = 'student';
-
-  /// This is the object which encapsulates the token required
+  /// This is the object which encapsulate the token required
   /// in order to make an authenticated API call.
   ///
   /// When the [_tokenController] notifies its children,
@@ -81,11 +74,7 @@ class ApiController {
     var token = await _client.login(email, password);
     if (token == null) {
       throw Exception('Invalid data recieved. Please check your connection.');
-    } else if (token?.user?.role != permittedRole) {
-      throw Exception(
-          'Only students can use this app. You do not have student credentials.');
     }
-
     _tokenController.setToken(token);
   }
 

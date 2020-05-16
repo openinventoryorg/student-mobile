@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:openinventory_student_app/controllers/cart.dart';
+import 'package:openinventory_student_app/controllers/socket.dart';
 import 'package:openinventory_student_app/views/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -41,13 +42,25 @@ class App extends StatelessWidget {
         child:
             ProxyProvider2<TokenController, BaseUrlController, ApiController>(
           create: (context) => ApiController.fromContext(context: context),
-          update: (_, t, b, a) => ApiController(
-            baseUrlController: b,
-            tokenController: t,
-          ),
+          update: (_, t, b, a) {
+            return ApiController(
+              baseUrlController: b,
+              tokenController: t,
+            );
+          },
           lazy: false,
           child: ChangeNotifierProvider<CartController>(
-            child: OpenInventoryApp(),
+            child: ChangeNotifierProxyProvider2<TokenController,
+                BaseUrlController, SocketController>(
+              create: (context) =>
+                  SocketController.fromContext(context: context),
+              update: (_, t, b, s) => SocketController(
+                baseUrl: b.baseUrl,
+                token: t.tokenOfStaff,
+              ),
+              child: OpenInventoryApp(),
+              lazy: false,
+            ),
             create: (_) => CartController(),
           ),
         ),

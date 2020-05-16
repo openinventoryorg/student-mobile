@@ -23,6 +23,10 @@ dependencies:
   # state management
   provider: ^4.0.4
 
+  # staff app
+  adhara_socket_io: ^0.4.1
+  barcode_scan: ^2.0.1
+
   # store data
   flutter_secure_storage: ^3.3.1+1
   shared_preferences: ^0.5.6+3

@@ -72,7 +72,7 @@ class SettingsSection extends StatelessWidget {
   }
 
   /// Logs the user out
-  Future<void> logout(BuildContext context) async {
+  static Future<void> logout(BuildContext context) async {
     await ApiController.of(context).logOut();
     AppRouter.freshNavigate(context, '/');
   }

@@ -28,7 +28,7 @@ class TokenController extends ChangeNotifier {
   ///
   /// This cannot be final since this has to reset when the user
   /// logs out. In that case, this has to be reset to null.
-  Completer<String> tokenLoadedCompleter = Completer();
+  Completer<UserResponse> tokenLoadedCompleter = Completer();
 
   /// Secure storage to be used to store `token`.
   ///
@@ -63,7 +63,7 @@ class TokenController extends ChangeNotifier {
       var parsed = json.decode(jwt);
       _token = TokenResponse.fromJson(parsed);
     }
-    tokenLoadedCompleter.complete(_token?.user?.email);
+    tokenLoadedCompleter.complete(_token?.user);
     notifyListeners();
   }
 
@@ -123,4 +123,7 @@ class TokenController extends ChangeNotifier {
 
   /// Logged in status of the user
   bool get isLoggedIn => _token != null;
+
+  String get tokenOfStaff =>
+      _token?.user?.role != 'student' ? _token?.token : null;
 }
