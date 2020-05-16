@@ -73,13 +73,6 @@ class ApiController {
     return Provider.of<ApiController>(context, listen: false);
   }
 
-  /// Helper method to make consuming this object easy
-  ///
-  /// This will listen to future emissions from api controller
-  static ApiController listenOf(BuildContext context) {
-    return Provider.of<ApiController>(context, listen: true);
-  }
-
   /// Logs the user in using the given credentials.
   ///
   /// Sends a login request and stores the recieved token.

@@ -77,7 +77,6 @@ class ApiClient {
     try {
       String endPoint = '$_baseUrl/api/labs/$labId/items';
       var response = await _dio.get(endPoint);
-      print(response.data);
       return LabItemListResponse.fromJson(response.data).labItems;
     } catch (err) {
       throw throwError(err);

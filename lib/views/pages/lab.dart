@@ -11,6 +11,7 @@ import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/controllers/cart.dart';
 import 'package:openinventory_student_app/routes/router.dart';
 import 'package:openinventory_student_app/views/colors.dart';
+import 'package:openinventory_student_app/views/helpers/handled_builder.dart';
 import 'package:openinventory_student_app/views/pages/components/lab_item_card.dart';
 
 class LabPage extends StatelessWidget {
@@ -21,27 +22,32 @@ class LabPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Set<CartItem> cartItems = CartController.listenOf(context).getCartItems(id);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Open Inventory'),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(LineIcons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: LabSearchDelegate(id));
+            },
+          )
+        ],
       ),
-      body: FutureBuilder<List<LabItemResponse>>(
-        future: ApiController.listenOf(context).labItemsList(id),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.data == null)
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-
+      body: HandledBuilder<List<LabItemResponse>>(
+        fetch: () => ApiController.of(context).labItemsList(id),
+        builder: (context, data) {
           return Column(
             children: <Widget>[
               Expanded(
                 child: ListView.builder(
-                  itemCount: snapshot.data.length,
+                  itemCount: data.length,
                   itemBuilder: (context, index) => LabItemCard(
                     context: context,
-                    labItem: snapshot.data[index],
+                    labItem: data[index],
                     labId: id,
                   ),
                 ),
@@ -51,15 +57,76 @@ class LabPage extends StatelessWidget {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(LineIcons.check),
-        label: Text(
-            'Continue to Submit (x${CartController.listenOf(context).getCartItems(id).length})'),
-        backgroundColor: AppColors.colorD,
+      floatingActionButton: cartItems.isNotEmpty
+          ? FloatingActionButton.extended(
+              icon: Icon(LineIcons.check),
+              label: Text('Continue to Submit (x${cartItems.length})'),
+              backgroundColor: AppColors.colorD,
+              onPressed: () {
+                AppRouter.navigate(context, '/lend/$id');
+              },
+            )
+          : null,
+    );
+  }
+}
+
+class LabSearchDelegate extends SearchDelegate {
+  final String id;
+
+  LabSearchDelegate(this.id);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(LineIcons.search),
         onPressed: () {
-          AppRouter.navigate(context, '/lend/$id');
+          showResults(context);
         },
       ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(LineIcons.arrow_left),
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return HandledBuilder<List<LabItemResponse>>(
+      fetch: () => ApiController.of(context).labItemsList(id),
+      builder: (context, data) {
+        var filtered = data
+            .where((element) => element.itemSet.title.contains(query))
+            .toList();
+
+        return Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                itemCount: filtered.length,
+                itemBuilder: (context, index) => LabItemCard(
+                  context: context,
+                  labItem: filtered[index],
+                  labId: id,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container();
   }
 }

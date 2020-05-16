@@ -8,7 +8,6 @@ import 'package:line_icons/line_icons.dart';
 
 import 'package:openinventory_student_app/views/sections/browse.dart';
 import 'package:openinventory_student_app/views/sections/history.dart';
-import 'package:openinventory_student_app/views/sections/search.dart';
 import 'package:openinventory_student_app/views/sections/settings.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,7 +38,6 @@ class _HomePageState extends State<HomePage> {
         physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           BrowseSection(),
-          SearchSection(),
           HistorySection(),
           SettingsSection(),
         ],
@@ -47,7 +45,6 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(iconData: LineIcons.home, title: "Home"),
-          TabData(iconData: LineIcons.search, title: "Search"),
           TabData(iconData: LineIcons.book, title: "History"),
           TabData(iconData: LineIcons.gear, title: "Settings")
         ],

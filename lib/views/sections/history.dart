@@ -5,23 +5,19 @@ import 'package:openinventory_student_app/constants.dart';
 import 'package:openinventory_student_app/controllers/api.dart';
 import 'package:openinventory_student_app/helpers.dart';
 import 'package:openinventory_student_app/routes/router.dart';
+import 'package:openinventory_student_app/views/helpers/handled_builder.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HistorySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<HistoryResponse>>(
-      future: ApiController.listenOf(context).getHistory(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data == null)
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-
+    return HandledBuilder<List<HistoryResponse>>(
+      fetch: ApiController.of(context).getHistory,
+      builder: (context, data) {
         return ListView.builder(
-          itemCount: snapshot.data.length,
+          itemCount: data.length,
           itemBuilder: (_, i) => RequestCard(
-            request: snapshot.data[snapshot.data.length - i - 1],
+            request: data[data.length - i - 1],
           ),
         );
       },
@@ -43,7 +39,7 @@ class RequestCard extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.w900),
       ),
       leading: CircleAvatar(
-        child: Text('${request.requestItems.length}'),
+        child: Text('x${request.requestItems.length}'),
       ),
       subtitle: Text(
           "${request.capitalizedStatus} ${timeago.format(request.updatedAt)}"),

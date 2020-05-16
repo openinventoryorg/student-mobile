@@ -9,6 +9,7 @@ import 'package:openinventory_student_app/controllers/token.dart';
 import 'package:openinventory_student_app/helpers.dart';
 import 'package:openinventory_student_app/routes/router.dart';
 import 'package:openinventory_student_app/views/colors.dart';
+import 'package:openinventory_student_app/views/helpers/handled_builder.dart';
 
 class LendForm extends StatefulWidget {
   final String id;
@@ -38,12 +39,9 @@ class _LendFormState extends State<LendForm> {
         title: Text('Open Inventory'),
         centerTitle: true,
       ),
-      body: FutureBuilder<SupervisorListResponse>(
-        future: ApiController.of(context).supervisorsList(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData)
-            return Center(child: CircularProgressIndicator());
-
+      body: HandledBuilder<SupervisorListResponse>(
+        fetch: ApiController.of(context).supervisorsList,
+        builder: (context, data) {
           return ListView(
             children: <Widget>[
               Padding(
@@ -70,14 +68,14 @@ class _LendFormState extends State<LendForm> {
                           child: Padding(
                             padding: const EdgeInsets.only(right: 8.0),
                             child: DropdownButton<SupervisorResponse>(
-                              items: [
-                                for (var supervisor
-                                    in snapshot.data.supervisors)
-                                  DropdownMenuItem(
-                                    value: supervisor,
-                                    child: Text(supervisor.toString()),
-                                  ),
-                              ],
+                              items: data.supervisors
+                                  .map(
+                                    (supervisor) => DropdownMenuItem(
+                                      value: supervisor,
+                                      child: Text('$supervisor'),
+                                    ),
+                                  )
+                                  .toList(),
                               onChanged: (s) => setState(() {
                                 supervisor = s;
                               }),

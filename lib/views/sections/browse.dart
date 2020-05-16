@@ -7,26 +7,23 @@ import 'package:line_icons/line_icons.dart';
 import 'package:openinventory_student_app/api/responses/lab.dart';
 import 'package:openinventory_student_app/constants.dart';
 import 'package:openinventory_student_app/controllers/api.dart';
+import 'package:openinventory_student_app/helpers.dart';
 import 'package:openinventory_student_app/routes/router.dart';
 import 'package:openinventory_student_app/views/colors.dart';
+import 'package:openinventory_student_app/views/helpers/handled_builder.dart';
 
 class BrowseSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<LabResponse>>(
-      future: ApiController.listenOf(context).labList(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data == null)
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-
+    return HandledBuilder<List<LabResponse>>(
+      fetch: ApiController.of(context).labList,
+      builder: (context, data) {
         return GridView.builder(
           physics: BouncingScrollPhysics(),
-          itemCount: snapshot.data.length,
+          itemCount: data.length,
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: (context, index) => LabCard(lab: snapshot.data[index]),
+          itemBuilder: (context, index) => LabCard(lab: data[index]),
         );
       },
     );
@@ -58,13 +55,13 @@ class LabCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 AutoSizeText(
-                  lab.title,
+                  Helpers.capitalize(lab.title),
                   style: _LabCardStyles.title,
                   textAlign: TextAlign.center,
                   maxLines: 2,
                 ),
                 AutoSizeText(
-                  lab.subtitle,
+                  Helpers.capitalize(lab.subtitle),
                   style: _LabCardStyles.subtitle,
                   textAlign: TextAlign.center,
                   maxLines: 1,
