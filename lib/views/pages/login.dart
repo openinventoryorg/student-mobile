@@ -189,14 +189,13 @@ class _LoginPageState extends State<LoginPage> {
       try {
         await BaseUrlController.of(context).setBaseUrl(baseUrl);
         await ApiController.of(context).logIn(email, password);
-        await Future.delayed(Duration(milliseconds: 500));
         if (TokenController.of(context).tokenOfStaff == null) {
           AppRouter.freshNavigate(context, '/home');
         } else {
           AppRouter.freshNavigate(context, '/staff');
         }
       } catch (err) {
-        showSnackBar(context, err.message);
+        showSnackBar(context, err.toString());
       } finally {
         updateAsyncCallStatus(false);
       }

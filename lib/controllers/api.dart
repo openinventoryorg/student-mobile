@@ -75,7 +75,7 @@ class ApiController {
     if (token == null) {
       throw Exception('Invalid data recieved. Please check your connection.');
     }
-    _tokenController.setToken(token);
+    await _tokenController.setToken(token);
   }
 
   /// Logs the user out

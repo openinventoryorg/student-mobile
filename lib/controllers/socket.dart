@@ -72,8 +72,7 @@ class SocketController extends ChangeNotifier {
   /// WebSocket connection failed
   void _onConnectError(dynamic error) {
     _setConnected = false;
-    print('WebSocket connection failed');
-    print('Connect Error: $error');
+    print('WebSocket Connect Error: $error');
   }
 
   /// Connected to Web Socket
