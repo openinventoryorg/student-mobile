@@ -47,10 +47,15 @@ class RequestCard extends StatelessWidget {
       children: <Widget>[
         for (var request in request.requestItems)
           ListTile(
-            leading: request.item.itemSet.image == null
-                ? Container(color: Theme.of(context).primaryColor)
-                : Image.network('$CLOUDINARY_URL/${request.item.itemSet.image}',
-                    fit: BoxFit.cover),
+            leading: AspectRatio(
+              aspectRatio: 1,
+              child: request.item.itemSet.image == null
+                  ? Container(color: Theme.of(context).primaryColor)
+                  : Image.network(
+                      '$CLOUDINARY_URL/${request.item.itemSet.image}',
+                      fit: BoxFit.cover,
+                    ),
+            ),
             title: Text(Helpers.capitalize(request.item.itemSet.title)),
             subtitle: Text(Helpers.capitalize(request.status)),
             trailing: Icon(LineIcons.external_link),

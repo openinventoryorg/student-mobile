@@ -115,12 +115,18 @@ class _LendFormState extends State<LendForm> {
               ),
               for (var cartItem in cartItems)
                 ListTile(
-                  leading: cartItem.image == null
-                      ? Container(color: Theme.of(context).primaryColor)
-                      : Image.network(
-                          '$CLOUDINARY_URL/${cartItem.image}',
-                          fit: BoxFit.cover,
-                        ),
+                  leading: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: cartItem.image == null
+                          ? Container(color: Theme.of(context).primaryColor)
+                          : Image.network(
+                              '$CLOUDINARY_URL/${cartItem.image}',
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                  ),
                   title: Text(Helpers.capitalize(cartItem.title)),
                   onTap: () {
                     AppRouter.navigate(context, '/item/${cartItem.id}');
