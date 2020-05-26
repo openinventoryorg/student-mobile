@@ -3,6 +3,7 @@ library api_client;
 
 import 'package:dio/dio.dart';
 import 'package:openinventory_student_app/api/requests/lend.dart';
+import 'package:openinventory_student_app/api/requests/tempreq.dart';
 import 'package:openinventory_student_app/api/responses/history.dart';
 import 'package:openinventory_student_app/api/responses/item.dart';
 import 'package:openinventory_student_app/api/responses/supervisor.dart';
@@ -124,6 +125,32 @@ class ApiClient {
       return HistoryListResponse.fromJson(response.data).requests;
     } catch (err) {
       print(err);
+      throw throwError(err);
+    }
+  }
+
+  // post api/temporaryrequests/lend
+  Future<void> sendTempLendRequest(TempRequest request) async {
+    try {
+      String endPoint = '$_baseUrl/api/temporaryrequests/lend';
+      var response = await _dio.post(endPoint, data: request.toJson());
+      if (response.statusCode != 200) {
+        throw Exception('Something went wrong! Please try again');
+      }
+    } catch (err) {
+      throw throwError(err);
+    }
+  }
+
+  // post api/temporaryrequests/return
+  Future<void> sendTempReturnRequest(TempRequest request) async {
+    try {
+      String endPoint = '$_baseUrl/api/temporaryrequests/return';
+      var response = await _dio.post(endPoint, data: request.toJson());
+      if (response.statusCode != 200) {
+        throw Exception('Something went wrong! Please try again');
+      }
+    } catch (err) {
       throw throwError(err);
     }
   }

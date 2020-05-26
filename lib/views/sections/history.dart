@@ -32,6 +32,9 @@ class RequestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasAllReturned =
+        request.requestItems.every((element) => element.status == 'RETURNED');
+
     return ExpansionTile(
       key: Key(request.lab.id),
       title: Text(
@@ -39,7 +42,12 @@ class RequestCard extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.w900),
       ),
       leading: CircleAvatar(
-        child: Text('x${request.requestItems.length}'),
+        backgroundColor:
+            hasAllReturned ? Colors.grey : Theme.of(context).accentColor,
+        child: Text(
+          'x${request.requestItems.length}',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       subtitle: Text(
           "${request.capitalizedStatus} ${timeago.format(request.updatedAt)}"),

@@ -3,6 +3,7 @@ library controller_api;
 
 import 'package:flutter/widgets.dart';
 import 'package:openinventory_student_app/api/requests/lend.dart';
+import 'package:openinventory_student_app/api/requests/tempreq.dart';
 import 'package:openinventory_student_app/api/responses/history.dart';
 import 'package:openinventory_student_app/api/responses/item.dart';
 import 'package:openinventory_student_app/api/responses/labitem.dart';
@@ -108,6 +109,14 @@ class ApiController {
 
   Future<List<HistoryResponse>> getHistory() async {
     return await _client.getHistory();
+  }
+
+  Future<void> sendTempLendRequest(TempRequest request) async {
+    await _client.sendTempLendRequest(request);
+  }
+
+  Future<void> sendTempReturnRequest(TempRequest request) async {
+    await _client.sendTempReturnRequest(request);
   }
 
   /// Information of the current logged in user

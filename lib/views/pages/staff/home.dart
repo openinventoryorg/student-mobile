@@ -7,6 +7,7 @@ import 'package:openinventory_student_app/controllers/socket.dart';
 import 'package:openinventory_student_app/helpers.dart';
 import 'package:openinventory_student_app/routes/router.dart';
 import 'package:openinventory_student_app/views/colors.dart';
+import 'package:openinventory_student_app/views/pages/components/alerts.dart';
 import 'package:openinventory_student_app/views/pages/components/connection_ball.dart';
 import 'package:openinventory_student_app/views/sections/settings.dart';
 
@@ -16,44 +17,37 @@ class StaffHomePage extends StatelessWidget {
     bool connected = SocketController.of(context, true).isConnected;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Open Inventory'),
-        actions: <Widget>[ConnectionBall()],
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: (!connected)
+        appBar: AppBar(
+          title: Text('Open Inventory'),
+          actions: <Widget>[ConnectionBall()],
+        ),
+        body: GridView.count(
+          crossAxisCount: 2,
+          children: <Widget>[
+            (!connected)
                 ? disconnectedWidget()
                 : HomePageButton(
                     text: 'Scan Barcodes',
                     icon: LineIcons.barcode,
                     onPressed: () => sendBarcodeToWebApp(context),
                   ),
-          ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: HomePageButton(
-                    text: 'Profile',
-                    icon: LineIcons.user,
-                    onPressed: () => AppRouter.navigate(context, '/profile'),
-                  ),
-                ),
-                Expanded(
-                  child: HomePageButton(
-                    text: 'Logout',
-                    icon: LineIcons.sign_out,
-                    onPressed: () => SettingsSection.logout(context),
-                  ),
-                ),
-              ],
+            HomePageButton(
+              text: 'Temperory Handover',
+              icon: LineIcons.clock_o,
+              onPressed: () => AppRouter.navigate(context, '/staff/temp'),
             ),
-          ),
-        ],
-      ),
-    );
+            HomePageButton(
+              text: 'Profile',
+              icon: LineIcons.user,
+              onPressed: () => AppRouter.navigate(context, '/profile'),
+            ),
+            HomePageButton(
+              text: 'Logout',
+              icon: LineIcons.sign_out,
+              onPressed: () => SettingsSection.logout(context),
+            ),
+          ],
+        ));
   }
 
   Widget disconnectedWidget() {
@@ -77,10 +71,7 @@ class StaffHomePage extends StatelessWidget {
         ),
         Expanded(
           child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: CircularProgressIndicator(),
-            ),
+            child: CircularProgressIndicator(),
           ),
         )
       ],
@@ -92,6 +83,7 @@ class StaffHomePage extends StatelessWidget {
     if (code == null) return;
 
     SocketController.of(context).sendMessage({'barcode': code});
+    Alert.showAlertBox(context, 'Scanned Code: $code');
   }
 }
 
