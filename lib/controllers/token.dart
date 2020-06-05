@@ -6,8 +6,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/responses/token.dart';
 
@@ -30,13 +30,6 @@ class TokenController extends ChangeNotifier {
   /// logs out. In that case, this has to be reset to null.
   Completer<UserResponse> tokenLoadedCompleter = Completer();
 
-  /// Secure storage to be used to store `token`.
-  ///
-  /// We have to use a secure storage since `token` is a
-  /// sensitive information.
-  /// (Anyone can use this token to login to the system)
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
-
   /// Token that is recieved from the site.
   ///
   /// This contains user information as well.
@@ -58,7 +51,8 @@ class TokenController extends ChangeNotifier {
   /// If this fails to get token, [null] will be emitted through
   /// [tokenLoadedCompleter].
   Future<void> _loadToken() async {
-    String jwt = await _storage.read(key: storeKey);
+    SharedPreferences _storage = await SharedPreferences.getInstance();
+    String jwt = _storage.getString(storeKey);
     if (jwt != null) {
       var parsed = json.decode(jwt);
       _token = TokenResponse.fromJson(parsed);
@@ -75,7 +69,8 @@ class TokenController extends ChangeNotifier {
   /// secure storage cannot store other datatypes rather than String
   Future<void> _saveToken() async {
     var strJson = json.encode(_token.toJson());
-    await _storage.write(key: storeKey, value: strJson);
+    SharedPreferences _storage = await SharedPreferences.getInstance();
+    await _storage.setString(storeKey, strJson);
   }
 
   /// Deletes the token from storage.
@@ -86,7 +81,8 @@ class TokenController extends ChangeNotifier {
   /// Since completers cannot change output after completion,
   /// we have to reinitialize the completer and complete with [null].
   Future<void> _deleteToken() async {
-    await _storage.delete(key: storeKey);
+    SharedPreferences _storage = await SharedPreferences.getInstance();
+    await _storage.remove(storeKey);
     tokenLoadedCompleter = Completer();
     tokenLoadedCompleter.complete(null);
   }
