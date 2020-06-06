@@ -1,6 +1,7 @@
 /// Controller which handles API communication
 library controller_api;
 
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:openinventory_student_app/api/requests/lend.dart';
 import 'package:openinventory_student_app/api/requests/tempreq.dart';
@@ -34,6 +35,8 @@ class ApiController {
   /// The object which handles network calls.
   final ApiClient _client;
 
+  final Dio _dio;
+
   /// Initializes the object by acting as a proxy for
   /// [TokenController] and [BaseUrlController].
   ///
@@ -45,8 +48,10 @@ class ApiController {
   ApiController({
     @required TokenController tokenController,
     @required BaseUrlController baseUrlController,
+    @required Dio dioService,
   })  : _tokenController = tokenController,
-        _client = ApiClient(baseUrlController.baseUrl) {
+        _dio = dioService,
+        _client = ApiClient(dioService, baseUrlController.baseUrl) {
     _client.setToken(tokenController);
   }
 
@@ -55,10 +60,12 @@ class ApiController {
   /// This uses `.of()` methods to provide the reference.
   /// *Note: There must be [TokenController] and [BaseUrlController]
   /// objects above the provider of this object.*
-  factory ApiController.fromContext({@required BuildContext context}) {
+  factory ApiController.fromContext(
+      {@required Dio dioService, @required BuildContext context}) {
     return ApiController(
       tokenController: TokenController.of(context),
       baseUrlController: BaseUrlController.of(context),
+      dioService: dioService,
     );
   }
 
@@ -84,7 +91,7 @@ class ApiController {
   /// This does not call any end points.
   /// Instead this uses token controller to delete token,
   Future<void> logOut() async {
-    await _tokenController.logout();
+    await _tokenController.logout(_dio);
   }
 
   Future<List<LabResponse>> labList() async {

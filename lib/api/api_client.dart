@@ -24,7 +24,7 @@ class ApiClient {
   final Dio _dio;
 
   /// Initializer for client.
-  ApiClient(this._baseUrl) : _dio = Dio() {
+  ApiClient(this._dio, this._baseUrl) {
     _dio.options.headers["Content-Type"] = "application/json";
   }
 

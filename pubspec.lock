@@ -255,12 +255,12 @@ packages:
     source: hosted
     version: "0.14.0+3"
   http:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.0+4"
+    version: "0.12.1"
   http_multi_server:
     dependency: transitive
     description:
@@ -352,6 +352,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.6+3"
+  mockito:
+    dependency: "direct dev"
+    description:
+      name: mockito
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.1"
   nested:
     dependency: transitive
     description:
@@ -472,7 +479,7 @@ packages:
     source: hosted
     version: "0.1.5"
   quiver:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: quiver
       url: "https://pub.dartlang.org"

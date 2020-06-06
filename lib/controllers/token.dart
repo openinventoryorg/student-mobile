@@ -98,8 +98,9 @@ class TokenController extends ChangeNotifier {
   ///
   /// This simply deletes the token since a user without
   /// token is the same as logged out user.
-  Future<void> logout() async {
+  Future<void> logout(Dio dio) async {
     _token = null;
+    dio.options.headers.remove(apiTokenHeaderName);
     await _deleteToken();
     notifyListeners();
   }

@@ -188,6 +188,8 @@ class _LoginPageState extends State<LoginPage> {
       updateAsyncCallStatus(true);
       try {
         await BaseUrlController.of(context).setBaseUrl(baseUrl);
+        // Small delay to changes to propagate
+        await Future.delayed(Duration(milliseconds: 300));
         await ApiController.of(context).logIn(email, password);
         if (TokenController.of(context).tokenOfStaff == null) {
           AppRouter.freshNavigate(context, '/home');

@@ -50,7 +50,7 @@ class BaseUrlController extends ChangeNotifier {
     url ??= 'localhost';
     _baseUrl = url;
     SharedPreferences _storage = await SharedPreferences.getInstance();
-    _storage.setString(storeKey, _baseUrl);
+    await _storage.setString(storeKey, _baseUrl);
     notifyListeners();
   }
 
