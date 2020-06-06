@@ -10,7 +10,6 @@ import 'package:openinventory_student_app/api/responses/token.dart';
 
 import 'package:openinventory_student_app/main.dart';
 import 'package:openinventory_student_app/routes/routes.dart';
-import 'package:quiver/time.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockClient extends Mock implements http.Client {}
@@ -19,13 +18,14 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 class MockDioAdapter extends Mock implements HttpClientAdapter {}
 
+/// Integration test for login flow.
+///
+/// Connects to a mock api instead of real api.
 void main() {
-  setUp(() {
+  testWidgets('Sign-in flow test', (tester) async {
     defineAllRoutes();
     SharedPreferences.setMockInitialValues({});
-  });
 
-  testWidgets('Sign-in flow test', (tester) async {
     // Setup mock api
     var mockAdapter = MockDioAdapter();
     var tokenResponse = TokenResponse(
@@ -90,7 +90,6 @@ void main() {
     var reqOptionsL = verify(mockAdapter.fetch(captureAny, any, any)).captured;
     var reqOptions = List<RequestOptions>.from(reqOptionsL);
     expect(reqOptions[0].method, equals('POST'));
-    print(reqOptions[0].baseUrl);
     expect(reqOptions[0].path, equals('http://mock.com/api/login'));
     expect(
         reqOptions[0].data, {'email': 'user@mock.com', 'password': 'password'});
