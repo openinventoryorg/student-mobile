@@ -69,11 +69,6 @@ class StaffHomePage extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        )
       ],
     );
   }
