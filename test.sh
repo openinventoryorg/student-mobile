@@ -1,0 +1,1 @@
+flutter test -j 1

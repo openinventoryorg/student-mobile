@@ -55,6 +55,7 @@ dev_dependencies:
   http: ^0.12.1
   mockito: ^4.1.1
   flutter_launcher_icons: ^0.7.5
+  colorize: ^2.0.0
 
 flutter_icons:
   android: "launcher_icon"
