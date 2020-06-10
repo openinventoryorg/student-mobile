@@ -51,25 +51,23 @@ class StaffHomePage extends StatelessWidget {
   }
 
   Widget disconnectedWidget() {
-    return Column(
-      children: <Widget>[
-        Card(
-          color: AppColors.colorC,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              title: Text(
-                'You are not connected to the web app. ',
-                style: TextStyle(color: Colors.white),
-              ),
-              subtitle: Text(
-                'Recheck your internet connection. If the problem persists try restarting app.',
-                style: TextStyle(color: Colors.white),
-              ),
+    return Center(
+      child: Card(
+        color: AppColors.colorC,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            title: Text(
+              'You are not connected to the web app. ',
+              style: TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              'Recheck your internet connection. If the problem persists try restarting app.',
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 

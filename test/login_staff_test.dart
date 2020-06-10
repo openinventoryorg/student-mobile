@@ -31,8 +31,8 @@ void prints(String string) {
 ///
 /// Connects to a mock api instead of real api.
 void main() {
-  testWidgets('Sign-in flow test', (tester) async {
-    printh('Sign-in flow test');
+  testWidgets('Staff Sign-in flow test', (tester) async {
+    printh('Staff Sign-in flow test');
 
     defineAllRoutes();
     SharedPreferences.setMockInitialValues({});
@@ -46,8 +46,8 @@ void main() {
         email: "user@mock.com",
         firstName: "User",
         lastName: "User",
-        permissions: ["REQUESTER"],
-        role: "student",
+        permissions: ["ADMINISTRATOR"],
+        role: "administrator",
         roleId: "ROLEID",
       ),
     );
@@ -107,14 +107,14 @@ void main() {
     expect(reqOptions[0].path, equals('http://mock.com/api/login'));
     expect(
         reqOptions[0].data, {'email': 'user@mock.com', 'password': 'password'});
-    prints('4. Request(login) from app to server is valid.');
+    prints('4. Request(staff login) from app to server is valid.');
 
     // Ensure logged into home page
     pushedRoutesList =
         verify(mockNavigatorOb.didPush(captureAny, any)).captured;
     expect((pushedRoutesList[0] as PageRouteBuilder).settings.name,
-        equals("/home"));
-    prints('5. Automatically navigated to home page.');
+        equals("/staff"));
+    prints('5. Automatically navigated to staff page.');
 
     // Ensure data saved
     SharedPreferences prefs = await SharedPreferences.getInstance();
